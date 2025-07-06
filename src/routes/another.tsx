@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { convexQuery } from "@convex-dev/react-query";
 import { api } from "convex/_generated/api";
+import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/another")({
   component: RouteComponent,
@@ -14,6 +15,7 @@ function RouteComponent() {
   return (
     <div>
       <p>Hello "/another"!</p>
+      <Button>Hello World</Button>
       {/* <SignIn /> */}
       {data.map(({ _id, text }) => (
         <div key={_id}>{text}</div>
