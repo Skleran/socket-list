@@ -1,11 +1,19 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import Image from "next/image";
+import { useMutation, useQuery } from "convex/react";
+// import Image from "next/image";
 import { api } from "../../convex/_generated/api";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const tasks = useQuery(api.tasks.get);
+  // const tasks = useQuery(api.tasks.get);
+  const [text, setText] = useState("");
+  const createTodo = useMutation(api.todos.createTodo);
+  const todos = useQuery(api.todos.get);
+
+  const deleteTodo = useMutation(api.todos.deleteTodo);
+
   return (
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
     //   <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -104,12 +112,43 @@ export default function Home() {
     //     </a>
     //   </footer>
     // </div>
-    <main className="flex  flex-col items-center justify-between p-24">
-      {tasks?.map(({ _id, text }) => (
+    <main className="flex flex-col items-center justify-between font-mono p-24">
+      {/* {tasks?.map(({ _id, text }) => (
         <div key={_id}>
           {text} {_id}
         </div>
-      ))}
+      ))} */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          createTodo({ text });
+          setText("");
+        }}
+      >
+        <input
+          type="text"
+          value={text}
+          required
+          onChange={(e) => setText(e.target.value)}
+          className="border-1 border-primary"
+        />
+        <Button type="submit">create</Button>
+        <ul className="gap-4 flex flex-col my-4">
+          {todos?.map(({ _id, text }) => (
+            <li key={_id} className="flex flex-row justify-between">
+              <p>{text}</p>
+              <Button
+                variant={"destructive"}
+                size="icon"
+                type="button"
+                onClick={() => deleteTodo({ id: _id })}
+              >
+                X
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </form>
     </main>
   );
 }
