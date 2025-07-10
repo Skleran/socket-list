@@ -1,7 +1,10 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 
 export default defineSchema({
+  ...authTables,
+
   lists: defineTable({
     name: v.string(),
     type: v.union(
@@ -31,5 +34,5 @@ export default defineSchema({
     text: v.string(),
   }),
 
-  todos: defineTable({ text: v.string() }),
+  todos: defineTable({ text: v.string(), userId: v.id("users") }),
 });

@@ -1,3 +1,4 @@
+import { getAuthUserId } from "@convex-dev/auth/server";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
@@ -6,22 +7,28 @@ export const createTodo = mutation({
     text: v.string(),
   },
   handler: async (ctx, args) => {
-    await ctx.db.insert("todos", {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    return ctx.db.insert("todos", {
       text: args.text,
+      userId,
     });
   },
 });
 
-// export const updateTodo = mutation({
-//   args: {
-//     id: v.id(),
-//   },
-// });
-
 export const get = query({
-  args: {},
   handler: async (ctx) => {
-    return (await ctx.db.query("todos").collect()).reverse();
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    const todos = await ctx.db
+      .query("todos")
+      .filter((q) => q.eq(q.field("userId"), userId))
+      .collect();
+    return todos.reverse();
   },
 });
 
@@ -30,6 +37,17 @@ export const deleteTodo = mutation({
     id: v.id("todos"),
   },
   handler: async (ctx, args) => {
-    await ctx.db.delete(args.id);
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    const existingTodo = await ctx.db.get(args.id);
+    if (!existingTodo) {
+      throw new Error("todo now found");
+    }
+    if (existingTodo.userId !== userId) {
+      throw new Error("unauthorized - this todo belongs to another user");
+    }
+    return ctx.db.delete(args.id);
   },
 });

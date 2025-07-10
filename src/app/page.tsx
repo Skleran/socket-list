@@ -5,6 +5,8 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   // const tasks = useQuery(api.tasks.get);
@@ -112,7 +114,7 @@ export default function Home() {
     //     </a>
     //   </footer>
     // </div>
-    <main className="flex flex-col items-center justify-between font-mono p-24">
+    <main className="flex flex-col items-center justify-between font-mono py-24">
       {/* {tasks?.map(({ _id, text }) => (
         <div key={_id}>
           {text} {_id}
@@ -124,18 +126,25 @@ export default function Home() {
           createTodo({ text });
           setText("");
         }}
+        className="max-w-[800px] w-full mx-6"
       >
-        <input
-          type="text"
-          value={text}
-          required
-          onChange={(e) => setText(e.target.value)}
-          className="border-1 border-primary"
-        />
-        <Button type="submit">create</Button>
-        <ul className="gap-4 flex flex-col my-4">
+        <div className="w-full flex flex-row gap-4">
+          <Input
+            type="text"
+            value={text}
+            required
+            onChange={(e) => setText(e.target.value)}
+            placeholder="write your list item"
+          />
+          <Button type="submit">create</Button>
+        </div>
+
+        <ul className="gap-4 flex flex-col my-8">
           {todos?.map(({ _id, text }) => (
-            <li key={_id} className="flex flex-row justify-between">
+            <li
+              key={_id}
+              className="flex flex-row justify-between border-1 p-1 pl-3 items-center rounded-lg"
+            >
               <p>{text}</p>
               <Button
                 variant={"destructive"}
@@ -143,7 +152,7 @@ export default function Home() {
                 type="button"
                 onClick={() => deleteTodo({ id: _id })}
               >
-                X
+                <X />
               </Button>
             </li>
           ))}
