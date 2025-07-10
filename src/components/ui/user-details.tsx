@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import SignOut from "../sign-out";
+import Image from "next/image";
 
 export default async function UserDetails() {
   const user = await fetchQuery(
@@ -25,7 +26,11 @@ export default async function UserDetails() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded-full">
-        <img src={user.image} alt="" className="size-10 rounded-full " />
+        <Image
+          src={user.image || ""}
+          alt="Picture of the user"
+          className="size-10 rounded-full "
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{user.name?.toLowerCase()}</DropdownMenuLabel>

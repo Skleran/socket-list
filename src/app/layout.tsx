@@ -30,7 +30,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh]`}
+          className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh] w-full max-w-[800px] mx-auto px-6`}
         >
           <ConvexClientProvider>
             <ThemeProvider

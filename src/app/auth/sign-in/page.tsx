@@ -9,8 +9,8 @@ export default function SignIn() {
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-between font-mono p-24">
-      <p className="pb-8 text-xl">welcome back</p>
+    <div className="flex flex-col items-center justify-between font-mono py-24 text-center">
+      <p className="pb-12 text-xl">welcome back</p>
       <div className="flex flex-col items-center gap-4">
         <p>login with your github account</p>
         <Button
@@ -25,7 +25,7 @@ export default function SignIn() {
           login with github
         </Button>
       </div>
-      <div className="flex flex-col items-center gap-4 pt-8">
+      <div className="flex flex-col items-center gap-4 pt-12">
         <p>login with your google account</p>
         <Button
           onClick={() => {
