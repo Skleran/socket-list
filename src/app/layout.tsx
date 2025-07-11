@@ -30,7 +30,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh] w-full max-w-[800px] mx-auto px-6`}
+          className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh] w-full `}
         >
           <ConvexClientProvider>
             <ThemeProvider
@@ -39,8 +39,10 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Navbar />
-              {children}
+              <main className="max-w-[800px] mx-auto px-6">
+                <Navbar />
+                {children}
+              </main>
             </ThemeProvider>
           </ConvexClientProvider>
         </body>

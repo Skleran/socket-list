@@ -6,26 +6,28 @@ export default defineSchema({
   ...authTables,
 
   lists: defineTable({
-    name: v.string(),
+    title: v.string(),
+    userId: v.id("users"),
     type: v.union(
       v.literal("DEFAULT"),
       v.literal("CHECK"),
       v.literal("SHOPPING")
     ),
     // description: v.optional(v.string()),
-    createdAt: v.number(),
-    updatedAt: v.number(),
+    // createdAt: v.number(),
+    updatedAt: v.number(), //updatedAt: Date.now(),
   }),
 
   listItems: defineTable({
     listId: v.id("lists"),
+    userId: v.id("users"),
     content: v.string(),
     isCompleted: v.optional(v.boolean()),
     quantity: v.optional(v.number()),
     shopName: v.optional(v.string()),
     // shopName: v.union(v.literal("FILE"), v.literal("BIM"), v.literal("A101"), v.literal("TARIM KREDI")),
-    order: v.number(), // for ordering items
-    createdAt: v.number(),
+    // order: v.number(), // for ordering items
+    // createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_list", ["listId"]),
 
