@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { ListType } from "../page";
 import Checklist from "@/components/ui/checklist";
 import { Id } from "../../../convex/_generated/dataModel";
+import ShoppingList from "@/components/ui/shopping-list";
 
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
@@ -45,7 +46,9 @@ export default function ListPage() {
   if (type === "SHOPPING") {
     return (
       <div>
-        <p>shopping list with id: {params.listId}</p>
+        <p className="">{list.title}</p>
+        <br />
+        <ShoppingList listId={listId} />
       </div>
     );
   }

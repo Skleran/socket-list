@@ -22,25 +22,37 @@ type Props = {
   listId: Id<"lists">;
 };
 
-export default function DefaultListDialog({ listId }: Props) {
-  const createItem = useMutation(api.listItems.createDefaultListItem);
+export default function ShoppingListDialog({ listId }: Props) {
+  const createItem = useMutation(api.listItems.createShoppingListItem);
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const [quantity, setQuantity] = useState<number | "">("");
+  const [shopName, setShopName] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!content.trim()) {
+    if (quantity === 0) {
+      setContent("very");
+      setShopName("funny :|");
+      return;
+    }
+
+    if (!content.trim() || !quantity || quantity < 0 || !shopName.trim()) {
       return;
     }
 
     try {
       await createItem({
-        content: content.trim(),
         listId: listId,
+        content: content.trim(),
+        quantity: quantity,
+        shopName: shopName.trim(),
       });
 
       setContent("");
+      setQuantity("");
+      setShopName("");
       setOpen(false);
     } catch (err) {
       console.error("Error creating item: ", err);
@@ -60,13 +72,36 @@ export default function DefaultListDialog({ listId }: Props) {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="content">content</Label>
+              <Label htmlFor="content">item</Label>
               <Input
                 id="content"
                 name="item-content"
                 value={content}
-                placeholder="list item"
+                placeholder="item name"
                 onChange={(e) => setContent(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="shopName">shop</Label>
+              <Input
+                id="shopName"
+                name="item-shopName"
+                value={shopName}
+                placeholder="shop name"
+                onChange={(e) => setShopName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="quantity">quantity</Label>
+              <Input
+                id="quantity"
+                name="item-quantity"
+                value={quantity}
+                type="number"
+                placeholder="pcs/kg"
+                onChange={(e) => setQuantity(e.target.valueAsNumber)}
                 required
               />
             </div>
