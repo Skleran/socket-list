@@ -1,8 +1,52 @@
 "use client";
 
+import DefaultList from "@/components/ui/default-list";
 import { useParams } from "next/navigation";
+import { api } from "../../../convex/_generated/api";
+import { useQuery } from "convex/react";
+import { useEffect, useState } from "react";
+import { ListType } from "../page";
+import Checklist from "@/components/ui/checklist";
+import { Id } from "../../../convex/_generated/dataModel";
 
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
-  return <div>this is the page of list with id: {params.listId}</div>;
+  const listId = params.listId as Id<"lists">;
+  const list = useQuery(api.lists.getById, { listId });
+  const [type, setType] = useState<ListType | "">("");
+
+  useEffect(() => {
+    if (list?.type) {
+      setType(list.type as ListType);
+    }
+  }, [list]);
+
+  if (!list) {
+    return <p className="animate-spin w-fit">|</p>;
+  }
+
+  if (type === "DEFAULT") {
+    return (
+      <div>
+        <p className="">{list.title}</p>
+        <br />
+        <DefaultList listId={listId} />
+      </div>
+    );
+  }
+  if (type === "CHECK") {
+    return (
+      <div>
+        <p>checklist with id: {params.listId}</p>
+        <Checklist />
+      </div>
+    );
+  }
+  if (type === "SHOPPING") {
+    return (
+      <div>
+        <p>shopping list with id: {params.listId}</p>
+      </div>
+    );
+  }
 }

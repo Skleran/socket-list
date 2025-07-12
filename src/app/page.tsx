@@ -29,7 +29,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import Link from "next/link";
 
-type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
+export type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
 
 export default function Lists() {
   const [title, setTitle] = useState("");

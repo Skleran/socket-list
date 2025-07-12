@@ -38,3 +38,24 @@ export const get = query({
     return lists.reverse();
   },
 });
+
+export const getById = query({
+  args: {
+    listId: v.id("lists"),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const list = await ctx.db.get(args.listId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!list) {
+      throw new Error("List doesn't exist");
+    }
+    if (userId !== list.userId) {
+      throw new Error("this list belongs to another user");
+    }
+
+    return list;
+  },
+});
