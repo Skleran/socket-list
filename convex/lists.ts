@@ -50,8 +50,7 @@ export const getById = query({
       throw new Error("unauthorized");
     }
     if (!list) {
-      // throw new Error("List doesn't exist");
-      return null;
+      throw new Error("List doesn't exist");
     }
     if (userId !== list.userId) {
       throw new Error("this list belongs to another user");

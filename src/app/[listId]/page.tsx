@@ -27,7 +27,7 @@ export default function ListPage() {
   }
 
   if (list === null) {
-    return <p>this list doesn't exist</p>;
+    return <p>this list doesn&apos;t exist</p>;
   }
 
   if (type === "DEFAULT") {
