@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -105,7 +105,6 @@ export default function Lists() {
                   }}
                   required
                 />
-                {/* add: after writing title press enter to focus select */}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="type">type</Label>

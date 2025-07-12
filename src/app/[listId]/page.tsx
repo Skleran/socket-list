@@ -26,6 +26,10 @@ export default function ListPage() {
     return <p className="animate-spin w-fit">|</p>;
   }
 
+  if (list === null) {
+    return <p>this list doesn't exist</p>;
+  }
+
   if (type === "DEFAULT") {
     return (
       <div>
