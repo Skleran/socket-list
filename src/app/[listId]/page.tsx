@@ -22,12 +22,12 @@ export default function ListPage() {
     }
   }, [list]);
 
-  if (!list) {
-    return <p className="animate-spin w-fit">|</p>;
-  }
-
   if (list === null) {
     return <p>this list doesn&apos;t exist</p>;
+  }
+
+  if (!list) {
+    return <p className="animate-spin w-fit">|</p>;
   }
 
   if (type === "DEFAULT") {

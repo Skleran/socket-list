@@ -50,7 +50,8 @@ export const getById = query({
       throw new Error("unauthorized");
     }
     if (!list) {
-      throw new Error("List doesn't exist");
+      // throw new Error("List doesn't exist");
+      return null; //Solve the issue when authenticated user tries to access non existant list !!!
     }
     if (userId !== list.userId) {
       throw new Error("this list belongs to another user");
