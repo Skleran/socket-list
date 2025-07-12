@@ -29,7 +29,7 @@ export default function ListPage() {
   if (type === "DEFAULT") {
     return (
       <div>
-        <p className="">{list.title}</p>
+        <p className="text-xl tracking-tight font-semibold">{list.title}</p>
         <br />
         <DefaultList listId={listId} />
       </div>
@@ -38,7 +38,7 @@ export default function ListPage() {
   if (type === "CHECK") {
     return (
       <div>
-        <p className="">{list.title}</p>
+        <p className="text-xl tracking-tight font-semibold">{list.title}</p>
         <br />
         <Checklist listId={listId} />
       </div>
@@ -47,7 +47,7 @@ export default function ListPage() {
   if (type === "SHOPPING") {
     return (
       <div>
-        <p className="">{list.title}</p>
+        <p className="text-xl tracking-tight font-semibold">{list.title}</p>
         <br />
         <ShoppingList listId={listId} />
       </div>

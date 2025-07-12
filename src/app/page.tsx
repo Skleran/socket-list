@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -37,6 +37,8 @@ export default function Lists() {
   const [open, setOpen] = useState(false);
   const createList = useMutation(api.lists.createList);
   const lists = useQuery(api.lists.get);
+
+  const selectTriggerRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,7 +76,7 @@ export default function Lists() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Card className="aspect-square grid grid-rows-3 gap-0">
+          <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
             <div></div>
             <Plus className="m-auto size-10" />
             <p className="mx-auto text-sm">create new list</p>
@@ -95,6 +97,12 @@ export default function Lists() {
                   placeholder="Title of the list"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      selectTriggerRef.current?.focus();
+                    }
+                  }}
                   required
                 />
                 {/* add: after writing title press enter to focus select */}
@@ -106,7 +114,7 @@ export default function Lists() {
                   onValueChange={(value) => setType(value as ListType)}
                   required
                 >
-                  <SelectTrigger className="w-fit">
+                  <SelectTrigger ref={selectTriggerRef} className="w-fit">
                     <SelectValue placeholder="Select list type" />
                   </SelectTrigger>
                   <SelectContent>

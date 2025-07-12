@@ -1,12 +1,9 @@
-"use client";
-
 import { useMutation, useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import ChecklistDialog from "./checklist-dialog";
 import { Checkbox } from "./checkbox";
 import { Label } from "./label";
-import { useState } from "react";
 
 type Props = {
   listId: Id<"lists">;

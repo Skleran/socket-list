@@ -22,7 +22,15 @@ export default function ShoppingList({ listId }: Props) {
       ) : (
         <ul className="flex flex-col gap-3 list-disc ml-6">
           {listItems.map((item) => (
-            <li key={item._id}>{item.content}</li>
+            <li key={item._id}>
+              <div className="w-full grid grid-cols-5 gap-0">
+                <p>{item.content}</p>
+                <p className="text-center text-muted-foreground">|</p>
+                <p className="text-center">{item.shopName}</p>
+                <p className="text-center text-muted-foreground">|</p>
+                <p className="text-end">{item.quantity}</p>
+              </div>
+            </li>
           ))}
           <li className="w-full">
             <ShoppingListDialog listId={listId} />
