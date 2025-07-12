@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import Link from "next/link";
 
 type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
 
@@ -61,12 +62,14 @@ export default function Lists() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-auto gap-4">
       {lists?.map(({ _id, title, type }) => (
-        <Card className="aspect-square p-2 text-center" key={_id}>
-          <div className="flex flex-col m-auto gap-3">
-            <p>title: {title}</p>
-            <p>type: {type}</p>
-          </div>
-        </Card>
+        <Link href={_id} className="rounded-xl" key={_id}>
+          <Card className="aspect-square p-2 text-center">
+            <div className="flex flex-col m-auto gap-3">
+              <p>title: {title}</p>
+              <p>type: {type}</p>
+            </div>
+          </Card>{" "}
+        </Link>
       ))}
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -94,6 +97,7 @@ export default function Lists() {
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
+                {/* add: after writing title press enter to focus select */}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="type">type</Label>

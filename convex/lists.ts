@@ -33,7 +33,7 @@ export const get = query({
     }
     const lists = await ctx.db
       .query("lists")
-      .filter((q) => q.eq(q.field("userId"), userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
     return lists.reverse();
   },

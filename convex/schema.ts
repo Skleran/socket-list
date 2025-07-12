@@ -16,7 +16,7 @@ export default defineSchema({
     // description: v.optional(v.string()),
     // createdAt: v.number(),
     updatedAt: v.number(), //updatedAt: Date.now(),
-  }),
+  }).index("by_user", ["userId"]),
 
   listItems: defineTable({
     listId: v.id("lists"),
