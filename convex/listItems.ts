@@ -83,6 +83,31 @@ export const createChecklistItem = mutation({
   },
 });
 
+export const updateCompletionChecklistItem = mutation({
+  args: {
+    listItemId: v.id("listItems"),
+    isCompleted: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const listItem = await ctx.db.get(args.listItemId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!listItem) {
+      throw new Error("list item doesn't exist");
+    }
+    if (userId !== listItem.userId) {
+      throw new Error("this item belongs to another user");
+    }
+
+    return ctx.db.patch(args.listItemId, {
+      isCompleted: args.isCompleted,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
 export const createShoppingListItem = mutation({
   args: {
     listId: v.id("lists"),

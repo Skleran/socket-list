@@ -38,8 +38,9 @@ export default function ListPage() {
   if (type === "CHECK") {
     return (
       <div>
-        <p>checklist with id: {params.listId}</p>
-        <Checklist />
+        <p className="">{list.title}</p>
+        <br />
+        <Checklist listId={listId} />
       </div>
     );
   }
