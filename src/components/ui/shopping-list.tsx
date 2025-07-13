@@ -2,6 +2,7 @@ import { useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import ShoppingListDialog from "./shopping-list-dialog";
+import EditableShoppingListItem from "./editable-shopping-list-item";
 
 type Props = {
   listId: Id<"lists">;
@@ -22,15 +23,13 @@ export default function ShoppingList({ listId }: Props) {
       ) : (
         <ul className="flex flex-col gap-3 list-disc ml-6">
           {listItems.map((item) => (
-            <li key={item._id}>
-              <div className="w-full grid grid-cols-5 gap-0">
-                <p>{item.content}</p>
-                <p className="text-center text-muted-foreground">|</p>
-                <p className="text-center">{item.shopName}</p>
-                <p className="text-center text-muted-foreground">|</p>
-                <p className="text-end">{item.quantity}</p>
-              </div>
-            </li>
+            <EditableShoppingListItem
+              key={item._id}
+              _id={item._id}
+              content={item.content}
+              shopName={item.shopName}
+              quantity={item.quantity}
+            />
           ))}
           <li className="w-full">
             <ShoppingListDialog listId={listId} />
