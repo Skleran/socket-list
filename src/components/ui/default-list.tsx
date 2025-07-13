@@ -2,7 +2,7 @@ import { useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import DefaultListDialog from "./default-list-dialog";
-import EditableListItem from "./editable-list-item";
+import EditableDefaultListItem from "./editable-default-list-item";
 
 type Props = {
   listId: Id<"lists">;
@@ -21,11 +21,13 @@ export default function DefaultList({ listId }: Props) {
           <DefaultListDialog listId={listId} />
         </div>
       ) : (
-        <ul className="flex flex-col gap-3 list-disc ml-6">
+        <ul className="flex flex-col gap-3">
           {listItems.map((item) => (
-            <li key={item._id}>
-              <EditableListItem listItemId={item._id} content={item.content} />
-            </li>
+            <EditableDefaultListItem
+              key={item._id}
+              _id={item._id}
+              content={item.content}
+            />
           ))}
           <li className="w-full">
             <DefaultListDialog listId={listId} />
