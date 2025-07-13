@@ -26,6 +26,7 @@ export const getListItems = query({
   },
 });
 
+// default list item functions
 export const createDefaultListItem = mutation({
   args: {
     listId: v.id("lists"),
@@ -54,6 +55,32 @@ export const createDefaultListItem = mutation({
   },
 });
 
+export const updateDefaultItem = mutation({
+  args: {
+    listItemId: v.id("listItems"),
+    content: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const listItem = await ctx.db.get(args.listItemId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!listItem) {
+      throw new Error("list item doesn't exist");
+    }
+    if (userId !== listItem.userId) {
+      throw new Error("this item belongs to another user");
+    }
+
+    return ctx.db.patch(args.listItemId, {
+      content: args.content,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+// checklist item functions
 export const createChecklistItem = mutation({
   args: {
     listId: v.id("lists"),
@@ -108,6 +135,32 @@ export const updateCompletionChecklistItem = mutation({
   },
 });
 
+export const updateChecklistItem = mutation({
+  args: {
+    listItemId: v.id("listItems"),
+    content: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const listItem = await ctx.db.get(args.listItemId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!listItem) {
+      throw new Error("list item doesn't exist");
+    }
+    if (userId !== listItem.userId) {
+      throw new Error("this item belongs to another user");
+    }
+
+    return ctx.db.patch(args.listItemId, {
+      content: args.content,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+// shopping list item functions
 export const createShoppingListItem = mutation({
   args: {
     listId: v.id("lists"),
@@ -134,6 +187,35 @@ export const createShoppingListItem = mutation({
       quantity: args.quantity,
       shopName: args.shopName,
       userId,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+export const updateShoppingListItem = mutation({
+  args: {
+    listItemId: v.id("listItems"),
+    content: v.string(),
+    shopName: v.string(),
+    quantity: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const listItem = await ctx.db.get(args.listItemId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!listItem) {
+      throw new Error("list item doesn't exist");
+    }
+    if (userId !== listItem.userId) {
+      throw new Error("this item belongs to another user");
+    }
+
+    return ctx.db.patch(args.listItemId, {
+      content: args.content,
+      shopName: args.shopName,
+      quantity: args.quantity,
       updatedAt: Date.now(),
     });
   },
