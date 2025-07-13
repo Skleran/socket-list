@@ -115,7 +115,7 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
       onPaste={handlePaste}
       role="textbox"
       tabIndex={0}
-      className={`hover:bg-accent focus:bg-accent px-1 py-0.5 transition-colors rounded-sm outline-none ${
+      className={`w-full h-fit hover:bg-accent focus:bg-accent px-1 py-0.5 transition-colors rounded-sm outline-none ${
         editing
           ? "focus:ring focus:ring-accent-foreground"
           : "focus:ring focus:ring-accent-foreground/40"

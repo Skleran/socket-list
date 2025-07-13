@@ -3,6 +3,7 @@ import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import EditableListBase from "./editable-list-base";
 import { Checkbox } from "./checkbox";
+import DeleteListItemButton from "./delete-list-item-button";
 
 type Props = {
   _id: Id<"listItems">;
@@ -53,6 +54,7 @@ export default function EditableChecklistItem({
           })
         }
       />
+      <DeleteListItemButton _id={_id} />
     </li>
   );
 }

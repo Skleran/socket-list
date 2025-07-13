@@ -2,6 +2,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import EditableListBase from "./editable-list-base";
+import DeleteListItemButton from "./delete-list-item-button";
 
 type Props = {
   _id: Id<"listItems">;
@@ -24,7 +25,7 @@ export default function EditableShoppingListItem({
 
   return (
     <li key={_id}>
-      <div className="w-full grid grid-cols-[1fr_auto_20%_auto_1fr] gap-0">
+      <div className="w-full grid grid-cols-[1fr_auto_20%_auto_1fr_auto] items-center gap-0">
         <EditableListBase
           value={content}
           onSave={(val: string) =>
@@ -51,6 +52,7 @@ export default function EditableShoppingListItem({
             })
           }
         />
+        <DeleteListItemButton _id={_id} />
       </div>
     </li>
   );

@@ -3,6 +3,7 @@ import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import EditableListBase from "./editable-list-base";
 import { Dot } from "lucide-react";
+import DeleteListItemButton from "./delete-list-item-button";
 
 type Props = {
   _id: Id<"listItems">;
@@ -24,6 +25,7 @@ export default function EditableDefaultListItem({ _id, content }: Props) {
           })
         }
       />
+      <DeleteListItemButton _id={_id} />
     </li>
   );
 }

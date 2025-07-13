@@ -26,6 +26,27 @@ export const getListItems = query({
   },
 });
 
+export const deleteListItem = mutation({
+  args: {
+    listItemId: v.id("listItems"),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const listItem = await ctx.db.get(args.listItemId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!listItem) {
+      throw new Error("list item doesn't exist");
+    }
+    if (userId !== listItem.userId) {
+      throw new Error("this item belongs to another user");
+    }
+
+    return ctx.db.delete(args.listItemId);
+  },
+});
+
 // default list item functions
 export const createDefaultListItem = mutation({
   args: {

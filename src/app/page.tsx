@@ -75,7 +75,7 @@ export default function Lists() {
       ))}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+        <DialogTrigger className="rounded-xl">
           <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
             <div></div>
             <Plus className="m-auto size-10" />
