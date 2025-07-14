@@ -59,8 +59,14 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
     if (numeric && editing) {
       const allowed =
         e.key === "Backspace" ||
+        e.key === "Delete" ||
         e.key === "ArrowLeft" ||
         e.key === "ArrowRight" ||
+        e.key === "ArrowUp" ||
+        e.key === "ArrowDown" ||
+        e.key === "Home" ||
+        e.key === "End" ||
+        e.key === "Tab" ||
         /^[0-9]$/.test(e.key);
 
       if (!allowed && e.key !== "Enter" && e.key !== "Escape") {
@@ -79,14 +85,33 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
   };
 
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
-    setCurrent(e.currentTarget.textContent || "");
+    const newValue = e.currentTarget.textContent || "";
+
+    // Additional validation for numeric input
+    if (numeric && editing) {
+      const cleanValue = newValue.replace(/[^0-9]/g, "");
+      if (cleanValue !== newValue) {
+        e.currentTarget.textContent = cleanValue;
+        setCurrent(cleanValue);
+        return;
+      }
+    }
+
+    setCurrent(newValue);
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     if (numeric) {
       const text = e.clipboardData.getData("text");
-      if (!/^\d+$/.test(text)) {
+      const cleanText = text.replace(/[^0-9]/g, "");
+
+      if (cleanText !== text) {
         e.preventDefault();
+
+        // Insert only the numeric characters
+        if (cleanText) {
+          document.execCommand("insertText", false, cleanText);
+        }
       }
     }
   };
@@ -115,6 +140,7 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
       onPaste={handlePaste}
       role="textbox"
       tabIndex={0}
+      inputMode={numeric ? "numeric" : "text"}
       className={`w-full h-fit hover:bg-accent focus:bg-accent px-1 py-0.5 transition-colors rounded-sm outline-none ${
         editing
           ? "focus:ring focus:ring-accent-foreground"
