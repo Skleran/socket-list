@@ -47,6 +47,17 @@ export const deleteListItem = mutation({
   },
 });
 
+export const getPreviewItems = query({
+  args: { listId: v.id("lists") },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("listItems")
+      .withIndex("by_list", (q) => q.eq("listId", args.listId))
+      .order("asc")
+      .take(3);
+  },
+});
+
 // default list item functions
 export const createDefaultListItem = mutation({
   args: {
