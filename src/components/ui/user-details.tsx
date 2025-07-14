@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import SignOut from "../sign-out";
+import ChangeThemeTabs from "./theme-selector";
 
 export default async function UserDetails() {
   const user = await fetchQuery(
@@ -34,6 +35,9 @@ export default async function UserDetails() {
       <DropdownMenuContent>
         <DropdownMenuLabel>{user.name?.toLowerCase()}</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <ChangeThemeTabs animationKey="change-theme" />
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <SignOut />
         </DropdownMenuItem>
