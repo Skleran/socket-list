@@ -1,6 +1,8 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, MutationCtx, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { deleteListCustomMutation } from "./customFunctions";
+import { Id } from "./_generated/dataModel";
 
 export const createList = mutation({
   args: {
@@ -58,5 +60,21 @@ export const getById = query({
     }
 
     return list;
+  },
+});
+
+export const deleteList = deleteListCustomMutation({
+  args: {
+    listId: v.id("lists"),
+  },
+  handler: async (ctx: MutationCtx, args: { listId: Id<"lists"> }) => {
+    const userId = await getAuthUserId(ctx);
+    const list = await ctx.db.get(args.listId);
+
+    if (!userId) throw new Error("unauthorized");
+    if (!list) throw new Error("list not found");
+    if (list.userId !== userId) throw new Error("you cannot delete this list");
+
+    await ctx.db.delete(args.listId);
   },
 });

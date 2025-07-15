@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { ConvexQueryCacheProvider } from "convex-helpers/react/cache/provider";
 import Navbar from "@/components/ui/navbar";
 
 const geistSans = Geist({
@@ -33,17 +34,19 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh] w-full `}
         >
           <ConvexClientProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <main className="max-w-[800px] mx-auto px-6 pb-6">
-                <Navbar />
-                {children}
-              </main>
-            </ThemeProvider>
+            <ConvexQueryCacheProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <main className="max-w-[800px] mx-auto px-6 pb-6">
+                  <Navbar />
+                  {children}
+                </main>
+              </ThemeProvider>
+            </ConvexQueryCacheProvider>
           </ConvexClientProvider>
         </body>
       </html>

@@ -28,6 +28,7 @@ import {
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { ListType } from "@/app/page";
+import { motion } from "framer-motion";
 
 export default function NewListDialog() {
   const [title, setTitle] = useState("");
@@ -59,67 +60,75 @@ export default function NewListDialog() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="rounded-xl">
-        <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
-          <div></div>
-          <Plus className="m-auto size-10" />
-          <p className="mx-auto text-sm">create new list</p>
-        </Card>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <DialogHeader>
-            <DialogTitle>create list</DialogTitle>
-            <DialogDescription>-------</DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="title">title</Label>
-              <Input
-                id="title"
-                name="title"
-                placeholder="Title of the list"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    selectTriggerRef.current?.focus();
-                  }
-                }}
-                required
-              />
+    <motion.div
+      layout
+      initial={{ opacity: 1, scale: 1 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="rounded-xl w-full">
+          <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
+            <div></div>
+            <Plus className="m-auto size-10" />
+            <p className="mx-auto text-sm">create new list</p>
+          </Card>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            <DialogHeader>
+              <DialogTitle>create list</DialogTitle>
+              <DialogDescription>-------</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="title">title</Label>
+                <Input
+                  id="title"
+                  name="title"
+                  placeholder="Title of the list"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      selectTriggerRef.current?.focus();
+                    }
+                  }}
+                  required
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="type">type</Label>
+                <Select
+                  value={type}
+                  onValueChange={(value) => setType(value as ListType)}
+                  required
+                >
+                  <SelectTrigger ref={selectTriggerRef} className="w-fit">
+                    <SelectValue placeholder="Select list type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>types</SelectLabel>
+                      <SelectItem value="DEFAULT">standard list</SelectItem>
+                      <SelectItem value="CHECK">check list</SelectItem>
+                      <SelectItem value="SHOPPING">shopping list</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="type">type</Label>
-              <Select
-                value={type}
-                onValueChange={(value) => setType(value as ListType)}
-                required
-              >
-                <SelectTrigger ref={selectTriggerRef} className="w-fit">
-                  <SelectValue placeholder="Select list type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>types</SelectLabel>
-                    <SelectItem value="DEFAULT">standard list</SelectItem>
-                    <SelectItem value="CHECK">check list</SelectItem>
-                    <SelectItem value="SHOPPING">shopping list</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">cancel</Button>
-            </DialogClose>
-            <Button type="submit">create list</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">cancel</Button>
+              </DialogClose>
+              <Button type="submit">create list</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </motion.div>
   );
 }
