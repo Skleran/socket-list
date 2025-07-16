@@ -9,15 +9,15 @@ export const getListItems = query({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     const list = await ctx.db.get(args.listId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
+    // if (!userId) {
+    //   throw new Error("unauthorized");
+    // }
     if (!list) {
       throw new Error("list doesn't exist");
     }
-    if (userId !== list.userId) {
-      throw new Error("this list belongs to another user");
-    }
+    // if (userId !== list.userId) {
+    //   throw new Error("this list belongs to another user");
+    // }
     const listItems = await ctx.db
       .query("listItems")
       .withIndex("by_list", (q) => q.eq("listId", args.listId))

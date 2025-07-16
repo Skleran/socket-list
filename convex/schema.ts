@@ -31,10 +31,17 @@ export default defineSchema({
     quantity: v.optional(v.number()),
     shopName: v.optional(v.string()),
     // shopName: v.union(v.literal("FILE"), v.literal("BIM"), v.literal("A101"), v.literal("TARIM KREDI")),
-    // order: v.number(), // for ordering items
     // createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_list", ["listId"]),
+
+  listCollaborators: defineTable({
+    listId: v.id("lists"),
+    userId: v.id("users"),
+    role: v.union(v.literal("viewer"), v.literal("editor")),
+  })
+    .index("by_list", ["listId"])
+    .index("by_user", ["userId"]),
 
   tasks: defineTable({
     isCompleted: v.boolean(),

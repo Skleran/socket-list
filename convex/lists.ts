@@ -33,6 +33,60 @@ export const createList = mutation({
   },
 });
 
+export const updateListTitle = mutation({
+  args: {
+    title: v.string(),
+    listId: v.id("lists"),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const list = await ctx.db.get(args.listId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!list) {
+      throw new Error("list doesn't exist");
+    }
+    if (userId !== list.userId) {
+      throw new Error("only the owner can change list title");
+    }
+
+    return ctx.db.patch(args.listId, {
+      title: args.title,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+export const updateListVisibility = mutation({
+  args: {
+    visibility: v.union(
+      v.literal("private"),
+      v.literal("public-read"),
+      v.literal("public-edit")
+    ),
+    listId: v.id("lists"),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    const list = await ctx.db.get(args.listId);
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+    if (!list) {
+      throw new Error("list doesn't exist");
+    }
+    if (userId !== list.userId) {
+      throw new Error("only the owner can change list visibility");
+    }
+
+    return ctx.db.patch(args.listId, {
+      visibility: args.visibility,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
 export const get = query({
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
@@ -54,12 +108,19 @@ export const getById = query({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     const list = await ctx.db.get(args.listId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
+    // if (!userId) {
+    //   throw new Error("unauthorized"); // Allow all users
+    // }
     if (!list) {
       // throw new Error("List doesn't exist");
       return null; //Solve the issue when authenticated user tries to access non existant list !!!
+    }
+    // if (isCollaborator(userId, list._id)) return list;
+    if (
+      list.visibility === "public-read" ||
+      list.visibility === "public-edit"
+    ) {
+      return list;
     }
     if (userId !== list.userId) {
       throw new Error("this list belongs to another user");
