@@ -12,6 +12,11 @@ export const createList = mutation({
       v.literal("CHECK"),
       v.literal("SHOPPING")
     ),
+    visibility: v.union(
+      v.literal("private"),
+      v.literal("public-read"),
+      v.literal("public-edit")
+    ),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -21,6 +26,7 @@ export const createList = mutation({
     return ctx.db.insert("lists", {
       title: args.title,
       type: args.type,
+      visibility: args.visibility,
       userId,
       updatedAt: Date.now(),
     });

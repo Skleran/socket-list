@@ -13,6 +13,11 @@ export default defineSchema({
       v.literal("CHECK"),
       v.literal("SHOPPING")
     ),
+    visibility: v.union(
+      v.literal("private"), // only owner
+      v.literal("public-read"), // anyone with the link can view
+      v.literal("public-edit") // anyone with the link can edit
+    ),
     // description: v.optional(v.string()),
     // createdAt: v.number(),
     updatedAt: v.number(), //updatedAt: Date.now(),

@@ -7,6 +7,7 @@ import HomeListCard from "@/components/ui/home-list-card";
 import { AnimatePresence } from "framer-motion";
 
 export type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
+export type Visibility = "private" | "public-read" | "public-edit";
 
 export default function Lists() {
   const lists = useQuery(api.lists.get);

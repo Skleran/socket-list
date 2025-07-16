@@ -27,12 +27,13 @@ import {
 } from "@/components/ui/select";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { ListType } from "@/app/page";
+import { ListType, Visibility } from "@/app/page";
 import { motion } from "framer-motion";
 
 export default function NewListDialog() {
   const [title, setTitle] = useState("");
   const [type, setType] = useState<ListType | "">("");
+  const [visibility, setVisibility] = useState<Visibility | "">("");
   const [open, setOpen] = useState(false);
   const createList = useMutation(api.lists.createList);
 
@@ -49,12 +50,15 @@ export default function NewListDialog() {
       await createList({
         title: title.trim(),
         type: type as ListType,
+        visibility: visibility as Visibility,
       });
-
+      console.log(title + type + visibility);
       setTitle("");
       setType("");
+      setVisibility("");
       setOpen(false);
     } catch (err) {
+      console.log(title + type + visibility);
       console.error("Error creating list:", err);
     }
   };
@@ -115,6 +119,28 @@ export default function NewListDialog() {
                       <SelectItem value="DEFAULT">standard list</SelectItem>
                       <SelectItem value="CHECK">check list</SelectItem>
                       <SelectItem value="SHOPPING">shopping list</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="visibility">visibility</Label>
+                <Select
+                  value={visibility}
+                  onValueChange={(value) => setVisibility(value as Visibility)}
+                  required
+                >
+                  <SelectTrigger ref={selectTriggerRef} className="w-fit">
+                    <SelectValue placeholder="Select list visibility" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>visibility</SelectLabel>
+                      <SelectItem value="private">private</SelectItem>
+                      <SelectItem value="public-read">
+                        public read-only
+                      </SelectItem>
+                      <SelectItem value="public-edit">public edit</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
