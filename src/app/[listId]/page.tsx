@@ -10,7 +10,6 @@ import Checklist from "@/components/ui/checklist";
 import { Id } from "../../../convex/_generated/dataModel";
 import ShoppingList from "@/components/ui/shopping-list";
 import EditableListTitle from "@/components/ui/editable-list-title";
-import { updateListTitle } from "../../../convex/lists";
 import ManageListButton from "@/components/ui/manage-list-button";
 
 export default function ListPage() {

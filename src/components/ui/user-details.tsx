@@ -1,14 +1,6 @@
 import { convexAuthNextjsToken } from "@convex-dev/auth/nextjs/server";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "../../../convex/_generated/api";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import SignOut from "../sign-out";
 import ChangeThemeTabs from "./theme-selector";
