@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import SignOut from "../sign-out";
 import ChangeThemeTabs from "./theme-selector";
 
@@ -24,24 +25,24 @@ export default async function UserDetails() {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="rounded-full">
+    <Popover>
+      <PopoverTrigger className="rounded-full">
         <img
           src={user.image || ""}
           alt="Picture of the user"
           className="size-10 rounded-full"
         />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>{user.name?.toLowerCase()}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <ChangeThemeTabs animationKey="change-theme" />
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <SignOut />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </PopoverTrigger>
+      <PopoverContent className="w-fit flex flex-col p-2 items-center justify-center gap-3">
+        <h4 className="px-2 py-1.5 pt-1 text-sm font-medium data-[inset]:pl-8 border-b">
+          {user.name?.toLowerCase()}
+        </h4>
+        {/* <div className="bg-border -mx-1 my-1 h-px" /> */}
+
+        <ChangeThemeTabs animationKey="change-theme" />
+
+        <SignOut />
+      </PopoverContent>
+    </Popover>
   );
 }

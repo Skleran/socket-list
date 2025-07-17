@@ -9,10 +9,9 @@ import React, {
 type Props = {
   value: string;
   onSave: (val: string) => void;
-  numeric?: boolean;
 };
 
-export default function EditableListBase({ value, onSave, numeric }: Props) {
+export default function EditableListTitle({ value, onSave }: Props) {
   const [editing, setEditing] = useState(false);
   const [current, setCurrent] = useState(value);
   const divRef = useRef<HTMLDivElement>(null);
@@ -56,64 +55,20 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
       return;
     }
 
-    if (numeric && editing) {
-      const allowed =
-        e.key === "Backspace" ||
-        e.key === "Delete" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight" ||
-        e.key === "ArrowUp" ||
-        e.key === "ArrowDown" ||
-        e.key === "Home" ||
-        e.key === "End" ||
-        e.key === "Tab" ||
-        /^[0-9]$/.test(e.key);
-
-      if (!allowed && e.key !== "Enter" && e.key !== "Escape") {
+    if (editing) {
+      if (e.key === "Enter") {
         e.preventDefault();
-        return;
+        await handleSave();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        cancelEdit();
       }
-    }
-
-    if (e.key === "Enter") {
-      e.preventDefault();
-      await handleSave();
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      cancelEdit();
     }
   };
 
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
     const newValue = e.currentTarget.textContent || "";
-
-    // Additional validation for numeric input
-    if (numeric && editing) {
-      const cleanValue = newValue.replace(/[^0-9]/g, "");
-      if (cleanValue !== newValue) {
-        e.currentTarget.textContent = cleanValue;
-        setCurrent(cleanValue);
-        return;
-      }
-    }
-
     setCurrent(newValue);
-  };
-
-  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
-    if (numeric) {
-      const text = e.clipboardData.getData("text");
-      const cleanText = text.replace(/[^0-9]/g, "");
-
-      if (cleanText !== text) {
-        e.preventDefault();
-
-        // Insert only the numeric characters
-        if (cleanText) {
-          document.execCommand("insertText", false, cleanText);
-        }
-      }
-    }
   };
 
   useEffect(() => {
@@ -129,7 +84,7 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
   }, [value]);
 
   return (
-    <div
+    <h2
       ref={divRef}
       contentEditable={editing}
       suppressContentEditableWarning
@@ -137,17 +92,17 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
       onKeyDown={handleKeyDown}
       onBlur={cancelEdit}
       onClick={() => setEditing(true)}
-      onPaste={handlePaste}
+      // onPaste={handlePaste}
       role="textbox"
       tabIndex={0}
-      inputMode={numeric ? "numeric" : "text"}
-      className={`w-full h-fit hover:bg-accent px-1 py-0.5 transition-all rounded-sm outline-none ${
+      inputMode={"text"}
+      className={`w-full hover:bg-accent transition-all rounded-sm outline-none text-xl tracking-tight font-semibold ${
         editing
           ? "focus-visible:border-ring focus-visible:ring-accent-foreground/75 focus-visible:ring-[2px]"
           : "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
       }`}
     >
       {value}
-    </div>
+    </h2>
   );
 }

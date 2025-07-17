@@ -27,7 +27,7 @@ export default function DeleteListItemButton({ _id }: Props) {
     <Button
       variant={confirming ? "destructive" : "ghost"}
       size={"icon"}
-      className={`transition-opacity ${
+      className={`transition-all ${
         confirming
           ? "opacity-100"
           : "opacity-30 hover:opacity-100 focus:opacity-100"
