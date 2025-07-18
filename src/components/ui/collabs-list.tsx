@@ -65,28 +65,30 @@ export default function CollabsList({ listId }: Props) {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-60">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm">collab role:</p>
-                        <Select
-                          value={role}
-                          onValueChange={(value) => {
-                            const newRole = value as "viewer" | "editor";
-                            updateRole({ listId, role: newRole, userId });
-                          }}
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>
-                                update collaborator role
-                              </SelectLabel>
-                              <SelectItem value="viewer">Viewer</SelectItem>
-                              <SelectItem value="editor">Editor</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm">collab role:</p>
+                          <Select
+                            value={role}
+                            onValueChange={(value) => {
+                              const newRole = value as "viewer" | "editor";
+                              updateRole({ listId, role: newRole, userId });
+                            }}
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>
+                                  update collaborator role
+                                </SelectLabel>
+                                <SelectItem value="viewer">Viewer</SelectItem>
+                                <SelectItem value="editor">Editor</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </div>
                         <HoldToDeleteButton
                           onHoldComplete={() => handleRemove(userId, _id)}
                         />
