@@ -18,6 +18,18 @@ export default function ListPage() {
   const list = useQuery(api.lists.getById, { listId });
   const [type, setType] = useState<ListType | "">("");
   const updateListTitle = useMutation(api.lists.updateListTitle);
+  const addCollab = useMutation(api.collaborators.addCollaborator);
+
+  useEffect(() => {
+    if (
+      list &&
+      (list.visibility === "public-read" || list.visibility === "public-edit")
+    ) {
+      addCollab({ listId }).catch((err) => {
+        console.error("Failed to add collaborator:", err);
+      });
+    }
+  }, [list, addCollab, listId]);
 
   useEffect(() => {
     if (list?.type) {

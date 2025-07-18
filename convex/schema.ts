@@ -38,6 +38,7 @@ export default defineSchema({
   listCollaborators: defineTable({
     listId: v.id("lists"),
     userId: v.id("users"),
+    userName: v.string(),
     role: v.union(v.literal("viewer"), v.literal("editor")),
   })
     .index("by_list", ["listId"])

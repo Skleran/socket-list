@@ -35,6 +35,7 @@ export const addCollaborator = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
+
     if (!userId) {
       throw new Error("unauthorized");
     }
@@ -43,8 +44,16 @@ export const addCollaborator = mutation({
     if (!list) {
       throw new Error("list doesn't exist");
     }
+    if (userId === list.userId) {
+      return;
+    }
     if (list.visibility === "private") {
       throw new Error("this list is private and not joinable");
+    }
+
+    const user = await ctx.db.get(userId);
+    if (!user) {
+      throw new Error("user not found");
     }
 
     const existing = await ctx.db
@@ -63,6 +72,7 @@ export const addCollaborator = mutation({
     return await ctx.db.insert("listCollaborators", {
       userId: userId,
       listId: args.listId,
+      userName: user.name ?? "unnamed user",
       role,
     });
   },

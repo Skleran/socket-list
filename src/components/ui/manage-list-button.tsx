@@ -13,6 +13,7 @@ import { Visibility } from "@/app/page";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import CollabsList from "./collabs-list";
 
 type Props = {
   currentVisibility: Visibility;
@@ -44,7 +45,7 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
           <MoreHorizontal className="size-5.5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-60">
+      <PopoverContent className="w-64">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="leading-none font-medium">list settings</h4>
@@ -77,6 +78,11 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
               </SelectContent>
             </Select>
           </div>
+          <div className="border-b-1 my-1" />
+          <div className="space-y-2">
+            <h4 className="leading-none font-medium">collaborators</h4>
+          </div>
+          <CollabsList listId={listId} />
         </div>
       </PopoverContent>
     </Popover>
