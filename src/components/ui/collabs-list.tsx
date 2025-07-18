@@ -16,7 +16,7 @@ export default function CollabsList({ listId }: Props) {
       <div className="">
         <ScrollArea className="h-52 rounded-sm border">
           {collabs?.map(({ _id, userName, role }) => (
-            <div>
+            <div key={_id}>
               <div key={_id} className="flex p-3 items-end justify-between">
                 <div className="text-sm">{userName}</div>
                 <Badge
