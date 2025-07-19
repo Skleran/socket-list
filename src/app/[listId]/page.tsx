@@ -1,35 +1,44 @@
 "use client";
 
-import DefaultList from "@/components/ui/default-list";
 import { useParams } from "next/navigation";
-import { api } from "../../../convex/_generated/api";
-import { useMutation, useQuery } from "convex/react";
 import { useEffect, useState } from "react";
-import { ListType } from "../page";
-import Checklist from "@/components/ui/checklist";
+import { useMutation, useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
+import { api } from "../../../convex/_generated/api";
+import { ListType } from "../page";
+
+import DefaultList from "@/components/ui/default-list";
+import Checklist from "@/components/ui/checklist";
 import ShoppingList from "@/components/ui/shopping-list";
 import EditableListTitle from "@/components/ui/editable-list-title";
 import ManageListButton from "@/components/ui/manage-list-button";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
   const listId = params.listId as Id<"lists">;
+  const user = useCurrentUser();
   const list = useQuery(api.lists.getById, { listId });
   const [type, setType] = useState<ListType | "">("");
-  const updateListTitle = useMutation(api.lists.updateListTitle);
-  const addCollab = useMutation(api.collaborators.addCollaborator);
+  const updateListTitle = user ? useMutation(api.lists.updateListTitle) : null;
+  const addCollab = user
+    ? useMutation(api.collaborators.addCollaborator)
+    : null;
+  const isCreator = user && list?.userId === user._id;
 
   useEffect(() => {
     if (
+      user &&
       list &&
-      (list.visibility === "public-read" || list.visibility === "public-edit")
+      (list.visibility === "public-read" ||
+        list.visibility === "public-edit") &&
+      addCollab
     ) {
       addCollab({ listId }).catch((err) => {
         console.error("Failed to add collaborator:", err);
       });
     }
-  }, [list, addCollab, listId]);
+  }, [user, list, addCollab, listId]);
 
   useEffect(() => {
     if (list?.type) {
@@ -45,71 +54,54 @@ export default function ListPage() {
     return <p className="animate-spin w-fit">|</p>;
   }
 
-  if (type === "DEFAULT") {
-    return (
-      <div>
-        <div className="flex items-center gap-2 justify-between mb-4">
-          <EditableListTitle
-            value={list.title}
-            onSave={(val: string) =>
-              updateListTitle({
-                listId: list._id,
-                title: val,
-              })
-            }
-          />
-          <ManageListButton
-            listId={list._id}
-            currentVisibility={list.visibility}
-          />
-        </div>
+  const renderHeader = () => (
+    <div className="flex items-center gap-2 justify-between mb-4">
+      {isCreator && updateListTitle ? (
+        <EditableListTitle
+          value={list.title}
+          onSave={(val: string) =>
+            updateListTitle({
+              listId: list._id,
+              title: val,
+            })
+          }
+        />
+      ) : (
+        <h1 className="text-xl tracking-tight font-semibold">{list.title}</h1>
+      )}
 
-        <DefaultList listId={listId} />
-      </div>
-    );
-  }
-  if (type === "CHECK") {
-    return (
-      <div>
-        <div className="flex items-center gap-2 justify-between mb-4">
-          <EditableListTitle
-            value={list.title}
-            onSave={(val: string) =>
-              updateListTitle({
-                listId: list._id,
-                title: val,
-              })
-            }
-          />
-          <ManageListButton
-            listId={list._id}
-            currentVisibility={list.visibility}
-          />
+      {isCreator && (
+        <ManageListButton
+          listId={list._id}
+          currentVisibility={list.visibility}
+        />
+      )}
+    </div>
+  );
+
+  switch (type) {
+    case "DEFAULT":
+      return (
+        <div>
+          {renderHeader()}
+          <DefaultList listId={listId} />
         </div>
-        <Checklist listId={listId} />
-      </div>
-    );
-  }
-  if (type === "SHOPPING") {
-    return (
-      <div>
-        <div className="flex items-center gap-2 justify-between mb-4">
-          <EditableListTitle
-            value={list.title}
-            onSave={(val: string) =>
-              updateListTitle({
-                listId: list._id,
-                title: val,
-              })
-            }
-          />
-          <ManageListButton
-            listId={list._id}
-            currentVisibility={list.visibility}
-          />
+      );
+    case "CHECK":
+      return (
+        <div>
+          {renderHeader()}
+          <Checklist listId={listId} />
         </div>
-        <ShoppingList listId={listId} />
-      </div>
-    );
+      );
+    case "SHOPPING":
+      return (
+        <div>
+          {renderHeader()}
+          <ShoppingList listId={listId} />
+        </div>
+      );
+    default:
+      return <p>unknown list type</p>;
   }
 }
