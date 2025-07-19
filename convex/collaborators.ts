@@ -2,6 +2,38 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
+export const getCollaboratedLists = query({
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+
+    if (!userId) {
+      throw new Error("unauthorized");
+    }
+
+    const collaborations = await ctx.db
+      .query("listCollaborators")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+
+    const listIds = collaborations.map((c) => c.listId);
+
+    const listPromises = listIds.map((id) => ctx.db.get(id));
+    const lists = await Promise.all(listPromises);
+
+    const collaboratedLists = lists
+      .map((list, index) => {
+        if (!list) return null;
+        return {
+          ...list,
+          role: collaborations[index].role,
+        };
+      })
+      .filter((list): list is NonNullable<typeof list> => list !== null);
+
+    return collaboratedLists;
+  },
+});
+
 export const getCollaborators = query({
   args: {
     listId: v.id("lists"),

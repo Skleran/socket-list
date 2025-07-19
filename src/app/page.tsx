@@ -11,15 +11,37 @@ export type Visibility = "private" | "public-read" | "public-edit";
 
 export default function Lists() {
   const lists = useQuery(api.lists.get);
+  const collabLists = useQuery(api.collaborators.getCollaboratedLists);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-auto gap-3 sm:gap-4">
-      <AnimatePresence>
-        {lists?.map(({ _id, title, type }) => (
-          <HomeListCard listId={_id} title={title} type={type} key={_id} />
-        ))}
-        <NewListDialog />
-      </AnimatePresence>
+    <div className="w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-auto gap-3 sm:gap-4 mb-6">
+        <AnimatePresence>
+          {lists?.map(({ _id, title, type }) => (
+            <HomeListCard listId={_id} title={title} type={type} key={_id} />
+          ))}
+          <NewListDialog />
+        </AnimatePresence>
+      </div>
+      {collabLists?.length === 0 ? (
+        <></>
+      ) : (
+        <>
+          <div className="border-b-1 w-full mb-6" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-auto gap-3 sm:gap-4 mb-6">
+            <AnimatePresence>
+              {collabLists?.map(({ _id, title, type }) => (
+                <HomeListCard
+                  listId={_id}
+                  title={title}
+                  type={type}
+                  key={_id}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+        </>
+      )}
     </div>
   );
 }

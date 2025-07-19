@@ -66,24 +66,45 @@ export const createDefaultListItem = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
-    const list = await ctx.db.get(args.listId);
     if (!userId) {
       throw new Error("unauthorized");
     }
+
+    const list = await ctx.db.get(args.listId);
     if (!list || list.type !== "DEFAULT") {
       throw new Error("Invalid list type");
     }
-    if (userId !== list.userId) {
-      throw new Error("this list belongs to another user");
-    }
-    // add validation logic for guest users
 
-    return ctx.db.insert("listItems", {
-      listId: args.listId,
-      content: args.content,
-      userId,
-      updatedAt: Date.now(),
-    });
+    const isOwner = userId === list.userId;
+
+    // list owner
+    if (isOwner) {
+      return ctx.db.insert("listItems", {
+        listId: args.listId,
+        content: args.content,
+        userId,
+        updatedAt: Date.now(),
+      });
+    }
+
+    const collabUser = await ctx.db
+      .query("listCollaborators")
+      .withIndex("by_user_list", (q) =>
+        q.eq("userId", userId).eq("listId", list._id)
+      )
+      .unique();
+
+    // collaborator
+    if (collabUser?.role === "editor") {
+      return ctx.db.insert("listItems", {
+        listId: args.listId,
+        content: args.content,
+        userId: collabUser.userId,
+        updatedAt: Date.now(),
+      });
+    }
+
+    throw new Error("You don’t have permission to modify this list");
   },
 });
 

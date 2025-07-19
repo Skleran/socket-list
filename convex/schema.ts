@@ -42,6 +42,7 @@ export default defineSchema({
     role: v.union(v.literal("viewer"), v.literal("editor")),
   })
     .index("by_list", ["listId"])
+    .index("by_user", ["userId"])
     .index("by_user_list", ["userId", "listId"]),
 
   tasks: defineTable({
