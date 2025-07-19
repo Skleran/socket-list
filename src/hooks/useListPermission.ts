@@ -1,5 +1,4 @@
 import { useQuery } from "convex/react";
-
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { useCurrentUser } from "./useCurrentUser";
@@ -7,10 +6,14 @@ import { useCurrentUser } from "./useCurrentUser";
 export function useListPermissions(listId: Id<"lists">) {
   const user = useCurrentUser();
   const userId = user?._id;
+
   const list = useQuery(api.lists.getById, { listId });
-  const collaborators = userId
-    ? useQuery(api.collaborators.getCollaborators, { listId })
-    : undefined;
+
+  // pass undefined when userId is not present
+  const collaborators = useQuery(
+    api.collaborators.getCollaborators,
+    userId ? { listId } : "skip"
+  );
 
   // early loading state or guest
   if (
@@ -36,7 +39,6 @@ export function useListPermissions(listId: Id<"lists">) {
   }
 
   const isOwner = list.userId === userId;
-
   const collabEntry = collaborators?.find((c) => c.userId === userId);
   const role = isOwner ? "creator" : (collabEntry?.role ?? null);
   const canEdit = isOwner || role === "editor";
