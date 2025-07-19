@@ -20,19 +20,15 @@ export default function ListPage() {
   const user = useCurrentUser();
   const list = useQuery(api.lists.getById, { listId });
   const [type, setType] = useState<ListType | "">("");
-  const updateListTitle = user ? useMutation(api.lists.updateListTitle) : null;
-  const addCollab = user
-    ? useMutation(api.collaborators.addCollaborator)
-    : null;
+  const updateListTitle = useMutation(api.lists.updateListTitle);
+  const addCollab = useMutation(api.collaborators.addCollaborator);
   const isCreator = user && list?.userId === user._id;
 
   useEffect(() => {
     if (
       user &&
       list &&
-      (list.visibility === "public-read" ||
-        list.visibility === "public-edit") &&
-      addCollab
+      (list.visibility === "public-read" || list.visibility === "public-edit")
     ) {
       addCollab({ listId }).catch((err) => {
         console.error("Failed to add collaborator:", err);
@@ -56,7 +52,7 @@ export default function ListPage() {
 
   const renderHeader = () => (
     <div className="flex items-center gap-2 justify-between mb-4">
-      {isCreator && updateListTitle ? (
+      {isCreator ? (
         <EditableListTitle
           value={list.title}
           onSave={(val: string) =>
