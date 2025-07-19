@@ -17,6 +17,7 @@ import type * as auth from "../auth.js";
 import type * as collaborators from "../collaborators.js";
 import type * as customFunctions from "../customFunctions.js";
 import type * as http from "../http.js";
+import type * as listItemFunctions from "../listItemFunctions.js";
 import type * as listItems from "../listItems.js";
 import type * as lists from "../lists.js";
 import type * as tasks from "../tasks.js";
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   collaborators: typeof collaborators;
   customFunctions: typeof customFunctions;
   http: typeof http;
+  listItemFunctions: typeof listItemFunctions;
   listItems: typeof listItems;
   lists: typeof lists;
   tasks: typeof tasks;

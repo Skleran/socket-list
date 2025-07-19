@@ -1,13 +1,17 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import {
+  assertCanCreateListItem,
+  assertCanEditListItem,
+} from "./listItemFunctions";
 
 export const getListItems = query({
   args: {
     listId: v.id("lists"),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
+    // const userId = await getAuthUserId(ctx);
     const list = await ctx.db.get(args.listId);
     // if (!userId) {
     //   throw new Error("unauthorized");
@@ -22,7 +26,7 @@ export const getListItems = query({
       .query("listItems")
       .withIndex("by_list", (q) => q.eq("listId", args.listId))
       .collect();
-    return listItems.reverse();
+    return listItems;
   },
 });
 
@@ -39,9 +43,9 @@ export const deleteListItem = mutation({
     if (!listItem) {
       throw new Error("list item doesn't exist");
     }
-    if (userId !== listItem.userId) {
-      throw new Error("this item belongs to another user");
-    }
+    // if (userId !== listItem.userId) {
+    //   throw new Error("this item belongs to another user"); // to delete or not delete?
+    // }
 
     return ctx.db.delete(args.listItemId);
   },
@@ -65,46 +69,18 @@ export const createDefaultListItem = mutation({
     content: v.string(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
+    const { userId } = await assertCanCreateListItem(
+      ctx,
+      args.listId,
+      "DEFAULT"
+    );
 
-    const list = await ctx.db.get(args.listId);
-    if (!list || list.type !== "DEFAULT") {
-      throw new Error("Invalid list type");
-    }
-
-    const isOwner = userId === list.userId;
-
-    // list owner
-    if (isOwner) {
-      return ctx.db.insert("listItems", {
-        listId: args.listId,
-        content: args.content,
-        userId,
-        updatedAt: Date.now(),
-      });
-    }
-
-    const collabUser = await ctx.db
-      .query("listCollaborators")
-      .withIndex("by_user_list", (q) =>
-        q.eq("userId", userId).eq("listId", list._id)
-      )
-      .unique();
-
-    // collaborator
-    if (collabUser?.role === "editor") {
-      return ctx.db.insert("listItems", {
-        listId: args.listId,
-        content: args.content,
-        userId: collabUser.userId,
-        updatedAt: Date.now(),
-      });
-    }
-
-    throw new Error("You don’t have permission to modify this list");
+    return ctx.db.insert("listItems", {
+      listId: args.listId,
+      content: args.content,
+      userId,
+      updatedAt: Date.now(),
+    });
   },
 });
 
@@ -114,20 +90,11 @@ export const updateDefaultItem = mutation({
     content: v.string(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const listItem = await ctx.db.get(args.listItemId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!listItem) {
-      throw new Error("list item doesn't exist");
-    }
-    if (userId !== listItem.userId) {
-      throw new Error("this item belongs to another user");
-    }
+    const { userId } = await assertCanEditListItem(ctx, args.listItemId);
 
     return ctx.db.patch(args.listItemId, {
       content: args.content,
+      userId,
       updatedAt: Date.now(),
     });
   },
@@ -141,17 +108,7 @@ export const createChecklistItem = mutation({
     isCompleted: v.boolean(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const list = await ctx.db.get(args.listId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!list || list.type !== "CHECK") {
-      throw new Error("Invalid list type");
-    }
-    if (userId !== list.userId) {
-      throw new Error("this list belongs to another user");
-    }
+    const { userId } = await assertCanCreateListItem(ctx, args.listId, "CHECK");
 
     return ctx.db.insert("listItems", {
       listId: args.listId,
@@ -169,20 +126,23 @@ export const updateCompletionChecklistItem = mutation({
     isCompleted: v.boolean(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const listItem = await ctx.db.get(args.listItemId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!listItem) {
-      throw new Error("list item doesn't exist");
-    }
-    if (userId !== listItem.userId) {
-      throw new Error("this item belongs to another user");
-    }
+    const { userId } = await assertCanEditListItem(ctx, args.listItemId);
+
+    // const userId = await getAuthUserId(ctx);
+    // const listItem = await ctx.db.get(args.listItemId);
+    // if (!userId) {
+    //   throw new Error("unauthorized");
+    // }
+    // if (!listItem) {
+    //   throw new Error("list item doesn't exist");
+    // }
+    // if (userId !== listItem.userId) {
+    //   throw new Error("this item belongs to another user");
+    // }
 
     return ctx.db.patch(args.listItemId, {
       isCompleted: args.isCompleted,
+      userId,
       updatedAt: Date.now(),
     });
   },
@@ -194,20 +154,11 @@ export const updateChecklistItem = mutation({
     content: v.string(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const listItem = await ctx.db.get(args.listItemId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!listItem) {
-      throw new Error("list item doesn't exist");
-    }
-    if (userId !== listItem.userId) {
-      throw new Error("this item belongs to another user");
-    }
+    const { userId } = await assertCanEditListItem(ctx, args.listItemId);
 
     return ctx.db.patch(args.listItemId, {
       content: args.content,
+      userId,
       updatedAt: Date.now(),
     });
   },
@@ -222,17 +173,11 @@ export const createShoppingListItem = mutation({
     shopName: v.string(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const list = await ctx.db.get(args.listId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!list || list.type !== "SHOPPING") {
-      throw new Error("Invalid list type");
-    }
-    if (userId !== list.userId) {
-      throw new Error("this list belongs to another user");
-    }
+    const { userId } = await assertCanCreateListItem(
+      ctx,
+      args.listId,
+      "SHOPPING"
+    );
 
     return ctx.db.insert("listItems", {
       listId: args.listId,
@@ -253,20 +198,11 @@ export const updateShoppingListItem = mutation({
     quantity: v.number(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    const listItem = await ctx.db.get(args.listItemId);
-    if (!userId) {
-      throw new Error("unauthorized");
-    }
-    if (!listItem) {
-      throw new Error("list item doesn't exist");
-    }
-    if (userId !== listItem.userId) {
-      throw new Error("this item belongs to another user");
-    }
+    const { userId } = await assertCanEditListItem(ctx, args.listItemId);
 
     return ctx.db.patch(args.listItemId, {
       content: args.content,
+      userId,
       shopName: args.shopName,
       quantity: args.quantity,
       updatedAt: Date.now(),
