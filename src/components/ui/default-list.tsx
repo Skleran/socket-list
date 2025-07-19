@@ -3,6 +3,8 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import DefaultListDialog from "./default-list-dialog";
 import EditableDefaultListItem from "./editable-default-list-item";
+import { useListPermissions } from "@/hooks/useListPermission";
+import { Dot } from "lucide-react";
 
 type Props = {
   listId: Id<"lists">;
@@ -10,6 +12,7 @@ type Props = {
 
 export default function DefaultList({ listId }: Props) {
   const listItems = useQuery(api.listItems.getListItems, { listId });
+  const { canEdit } = useListPermissions(listId);
 
   return (
     <div className="w-full">
@@ -18,20 +21,29 @@ export default function DefaultList({ listId }: Props) {
       ) : listItems.length === 0 ? (
         <div className="flex flex-col gap-3">
           <p className="text-muted-foreground">no items</p>
-          <DefaultListDialog listId={listId} />
+          {canEdit && <DefaultListDialog listId={listId} />}
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
-          {listItems.map((item) => (
-            <EditableDefaultListItem
-              key={item._id}
-              _id={item._id}
-              content={item.content}
-            />
-          ))}
-          <li className="w-full">
-            <DefaultListDialog listId={listId} />
-          </li>
+          {listItems.map((item) =>
+            canEdit ? (
+              <EditableDefaultListItem
+                key={item._id}
+                _id={item._id}
+                content={item.content}
+              />
+            ) : (
+              <li key={item._id} className="flex items-center gap-1">
+                <Dot className="size-7" />
+                {item.content}
+              </li>
+            )
+          )}
+          {canEdit && (
+            <li className="w-full">
+              <DefaultListDialog listId={listId} />
+            </li>
+          )}
         </ul>
       )}
     </div>
