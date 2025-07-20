@@ -159,6 +159,33 @@ export const removeCollaborator = mutation({
   },
 });
 
+export const removeSelfCollaboration = mutation({
+  args: {
+    listId: v.id("lists"),
+  },
+  handler: async (ctx, args) => {
+    const currentUserId = await getAuthUserId(ctx);
+    const list = await ctx.db.get(args.listId);
+
+    if (!currentUserId) {
+      throw new Error("unauthorized");
+    }
+    if (!list) {
+      throw new Error("list doesn't exist");
+    }
+
+    const existing = await ctx.db
+      .query("listCollaborators")
+      .withIndex("by_user_list", (q) =>
+        q.eq("userId", currentUserId).eq("listId", args.listId)
+      )
+      .unique();
+    if (!existing) throw new Error("collaborator not found");
+
+    return ctx.db.delete(existing._id);
+  },
+});
+
 export const updateCollabRole = mutation({
   args: {
     userId: v.id("users"),

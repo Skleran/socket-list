@@ -5,6 +5,7 @@ import { api } from "../../convex/_generated/api";
 import NewListDialog from "@/components/ui/new-list-dialog";
 import HomeListCard from "@/components/ui/home-list-card";
 import { AnimatePresence } from "framer-motion";
+import HomeCollaboratedListCard from "@/components/ui/home-collaborated-list-card";
 
 export type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
 export type Visibility = "private" | "public-read" | "public-edit";
@@ -23,15 +24,20 @@ export default function Lists() {
           <NewListDialog />
         </AnimatePresence>
       </div>
-      {collabLists?.length === 0 ? (
+      {!collabLists ? (
+        <p className="animate-spin w-fit">|</p>
+      ) : collabLists?.length === 0 ? (
         <></>
       ) : (
         <>
-          <div className="border-b-1 w-full mb-6" />
+          <div className="border-b-1 w-full mb-4" />
+          <h4 className="text-xl font-semibold tracking-tight mb-3">
+            collaborated lists
+          </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-auto gap-3 sm:gap-4 mb-6">
             <AnimatePresence>
               {collabLists?.map(({ _id, title, type }) => (
-                <HomeListCard
+                <HomeCollaboratedListCard
                   listId={_id}
                   title={title}
                   type={type}

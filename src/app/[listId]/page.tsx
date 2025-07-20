@@ -14,17 +14,8 @@ import EditableListTitle from "@/components/ui/editable-list-title";
 import ManageListButton from "@/components/ui/manage-list-button";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-function isValidId(id: string): id is Id<"lists"> {
-  return /^[a-z][a-z0-9]{14,}$/i.test(id);
-}
-
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
-
-  if (!isValidId(params.listId)) {
-    return <p>invalid list id in url</p>;
-  }
-
   const listId = params.listId as Id<"lists">;
   const user = useCurrentUser();
   const list = useQuery(api.lists.getById, { listId });

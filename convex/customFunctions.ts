@@ -21,5 +21,13 @@ triggers.register("lists", async (ctx, change) => {
     for (const item of listItems) {
       await ctx.db.delete(item._id);
     }
+
+    const listCollaborations = await ctx.db
+      .query("listCollaborators")
+      .withIndex("by_list", (q) => q.eq("listId", change.id))
+      .collect();
+    for (const collabs of listCollaborations) {
+      await ctx.db.delete(collabs._id);
+    }
   }
 });

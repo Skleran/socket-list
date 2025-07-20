@@ -106,22 +106,37 @@ export const getById = query({
     listId: v.id("lists"),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
     const list = await ctx.db.get(args.listId);
-    // if (!userId) {
-    //   throw new Error("unauthorized"); // Allow all users
-    // }
+
     if (!list) {
       // throw new Error("List doesn't exist");
       return null; //Solve the issue when authenticated user tries to access non existant list !!!
     }
-    // if (isCollaborator(userId, list._id)) return list;
+
     if (
       list.visibility === "public-read" ||
       list.visibility === "public-edit"
     ) {
       return list;
     }
+
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      // throw new Error("unauthorized");
+      return null;
+    }
+
+    if (
+      await ctx.db
+        .query("listCollaborators")
+        .withIndex("by_user_list", (q) =>
+          q.eq("userId", userId).eq("listId", args.listId)
+        )
+        .unique()
+    ) {
+      return list;
+    }
+
     if (userId !== list.userId) {
       return null;
     }
