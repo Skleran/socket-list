@@ -68,7 +68,7 @@ export const getCollaborators = query({
       .unique();
 
     if (!isCollab) {
-      throw new Error("unauthorized");
+      return null;
     }
 
     return await ctx.db

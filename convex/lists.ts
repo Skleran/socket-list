@@ -123,7 +123,7 @@ export const getById = query({
       return list;
     }
     if (userId !== list.userId) {
-      throw new Error("this list belongs to another user");
+      return null;
     }
 
     return list;
