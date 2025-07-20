@@ -6,7 +6,6 @@ import { api } from "../../../convex/_generated/api";
 import { Card } from "./card";
 import Link from "next/link";
 import { CheckSquare, ShoppingCart, List } from "lucide-react";
-import DeleteListButton from "./delete-list-button";
 import { motion } from "framer-motion";
 import LeaveCollaboratedListButton from "./leave-collaborated-list-button";
 
