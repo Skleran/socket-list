@@ -15,7 +15,7 @@ type Props = {
   type: ListType;
 };
 
-export default function HomeCollaboratedListCard({
+export default function HomeCollaboratedListCardGrid({
   listId,
   title,
   type,

@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexQueryCacheProvider } from "convex-helpers/react/cache/provider";
 import Navbar from "@/components/ui/navbar";
+import { LayoutProvider } from "@/components/ui/layout-context";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const outfit = Outfit({
+  variable: "--font-outfit",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +26,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} font-mono antialiased min-h-[100svh] w-full `}
+          className={`${outfit.className} antialiased min-h-[100svh] w-full `}
         >
           <ConvexClientProvider>
             <ConvexQueryCacheProvider>
@@ -41,10 +36,12 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
               >
-                <main className="max-w-[800px] mx-auto px-6 pb-6">
-                  <Navbar />
-                  {children}
-                </main>
+                <LayoutProvider>
+                  <main className="max-w-[800px] mx-auto px-6 pb-6">
+                    <Navbar />
+                    {children}
+                  </main>
+                </LayoutProvider>
               </ThemeProvider>
             </ConvexQueryCacheProvider>
           </ConvexClientProvider>

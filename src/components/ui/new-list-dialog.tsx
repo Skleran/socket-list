@@ -29,6 +29,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { ListType, Visibility } from "@/app/page";
 import { motion } from "framer-motion";
+import { useLayoutContext } from "./layout-context";
 
 export default function NewListDialog() {
   const [title, setTitle] = useState("");
@@ -38,6 +39,8 @@ export default function NewListDialog() {
   const createList = useMutation(api.lists.createList);
 
   const selectTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const { layoutMode } = useLayoutContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,11 +76,19 @@ export default function NewListDialog() {
     >
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="rounded-xl w-full">
-          <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
-            <div></div>
-            <Plus className="m-auto size-10" />
-            <p className="mx-auto text-sm">create new list</p>
-          </Card>
+          {layoutMode === "grid" ? (
+            <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
+              <div></div>
+              <Plus className="m-auto size-10" />
+              <p className="mx-auto text-sm">create new list</p>
+            </Card>
+          ) : (
+            <Card className="grid grid-cols-[auto_auto_auto] justify-center items-center gap-4 hover:cursor-pointer h-21">
+              <Plus className="size-6" />
+              <p className="text-base">create new list</p>
+              <div></div>
+            </Card>
+          )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <form onSubmit={handleSubmit} className="grid gap-4">

@@ -15,7 +15,7 @@ type Props = {
   type: ListType;
 };
 
-export default function HomeListCard({ listId, title, type }: Props) {
+export default function HomeListCardGrid({ listId, title, type }: Props) {
   const items = useQuery(api.listItems.getPreviewItems, { listId });
 
   const typeIconMap: Record<ListType, React.ReactNode> = {

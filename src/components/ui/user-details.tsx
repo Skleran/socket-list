@@ -4,6 +4,7 @@ import { api } from "../../../convex/_generated/api";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import SignOut from "../sign-out";
 import ChangeThemeTabs from "./theme-selector";
+import ListLayoutSelector from "./list-layout-selector";
 
 export default async function UserDetails() {
   const user = await fetchQuery(
@@ -32,6 +33,8 @@ export default async function UserDetails() {
         {/* <div className="bg-border -mx-1 my-1 h-px" /> */}
 
         <ChangeThemeTabs animationKey="change-theme" />
+
+        <ListLayoutSelector />
 
         <SignOut />
       </PopoverContent>
