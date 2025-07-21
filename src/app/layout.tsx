@@ -10,6 +10,7 @@ import { LayoutProvider } from "@/components/ui/layout-context";
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
