@@ -20,8 +20,19 @@ export default function SignOut() {
         router.push("/");
       }}
     >
-      <p className={`animate-spin ${isLoading ? "" : "hidden"}`}>|</p>
-      sign out
+      <div className="grid grid-cols-[auto_1fr_auto] gap-3">
+        <p
+          className={`animate-spin transition-opacity ${isLoading ? "opacity-100" : "opacity-0"}`}
+        >
+          |
+        </p>
+        <p>sign out</p>
+        <p
+          className={`animate-spin transition-opacity ${isLoading ? "opacity-0" : "opacity-0"}`}
+        >
+          |
+        </p>
+      </div>
     </Button>
   );
 }
