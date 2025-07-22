@@ -7,7 +7,8 @@ export const getCollaboratedLists = query({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      throw new Error("unauthorized");
+      // throw new Error("unauthorized");
+      return null;
     }
 
     const collaborations = await ctx.db

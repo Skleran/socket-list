@@ -91,7 +91,8 @@ export const get = query({
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error("unauthorized");
+      // throw new Error("unauthorized");
+      return null;
     }
     const lists = await ctx.db
       .query("lists")
