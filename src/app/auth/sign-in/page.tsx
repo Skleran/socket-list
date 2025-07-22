@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
-import { AnimatePresence, easeIn, easeOut, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
