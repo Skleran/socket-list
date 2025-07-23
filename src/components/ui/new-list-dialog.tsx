@@ -28,7 +28,6 @@ import {
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { ListType, Visibility } from "@/app/page";
-import { motion } from "framer-motion";
 import { useLayoutContext } from "./layout-context";
 
 export default function NewListDialog() {
@@ -67,13 +66,7 @@ export default function NewListDialog() {
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 1, scale: 1 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="rounded-xl w-full">
           {layoutMode === "grid" ? (
@@ -166,6 +159,6 @@ export default function NewListDialog() {
           </form>
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </div>
   );
 }

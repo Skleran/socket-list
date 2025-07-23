@@ -13,7 +13,6 @@ import {
   MoreVertical,
 } from "lucide-react";
 // import DeleteListButton from "./delete-list-button";
-import { motion } from "framer-motion";
 import { Separator } from "./separator";
 import { Button } from "./button";
 
@@ -35,13 +34,7 @@ export default function HomeListCardList({ listId, title, type }: Props) {
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 1, scale: 1 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div>
       <Link href={listId} className="rounded-xl" key={listId}>
         <Card className="p-3 py-4">
           <div className="px-2 sm:px-3.5 sm:py-1.5 flex items-center justify-between gap-2">
@@ -70,6 +63,6 @@ export default function HomeListCardList({ listId, title, type }: Props) {
           </div>
         </Card>
       </Link>
-    </motion.div>
+    </div>
   );
 }
