@@ -6,13 +6,21 @@ import React, {
   FormEvent,
 } from "react";
 
+import { cn } from "@/lib/utils";
+
 type Props = {
   value: string;
   onSave: (val: string) => void;
   numeric?: boolean;
+  className?: string;
 };
 
-export default function EditableListBase({ value, onSave, numeric }: Props) {
+export default function EditableListBase({
+  value,
+  onSave,
+  numeric,
+  className,
+}: Props) {
   const [editing, setEditing] = useState(false);
   const [current, setCurrent] = useState(value);
   const divRef = useRef<HTMLDivElement>(null);
@@ -141,11 +149,14 @@ export default function EditableListBase({ value, onSave, numeric }: Props) {
       role="textbox"
       tabIndex={0}
       inputMode={numeric ? "numeric" : "text"}
-      className={`w-full h-fit hover:bg-accent px-1 py-0.5 transition-all rounded-sm outline-none ${
-        editing
-          ? "focus-visible:border-ring focus-visible:ring-accent-foreground/75 focus-visible:ring-[2px]"
-          : "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-      }`}
+      className={cn(
+        `w-full h-fit hover:bg-accent px-1 py-0.5 transition-all rounded-sm outline-none ${
+          editing
+            ? "focus-visible:border-ring focus-visible:ring-accent-foreground/75 focus-visible:ring-[2px]"
+            : "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+        }`,
+        className
+      )}
     >
       {value}
     </div>

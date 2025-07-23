@@ -51,8 +51,18 @@ export async function assertCanEditListItem(
     throw new Error("Invalid list item");
   }
 
-  const isOwner = userId === listItem.userId;
-  if (isOwner) {
+  const isItemOwner = userId === listItem.userId;
+  if (isItemOwner) {
+    return { listItem, userId };
+  }
+
+  const list = await ctx.db.get(listItem.listId);
+  if (!list) {
+    throw new Error("Invalid list");
+  }
+
+  // If user is the owner of the list
+  if (userId === list.userId) {
     return { listItem, userId };
   }
 

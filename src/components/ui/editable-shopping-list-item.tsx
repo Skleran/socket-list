@@ -3,6 +3,7 @@ import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import EditableListBase from "./editable-list-base";
 import DeleteListItemButton from "./delete-list-item-button";
+import { Separator } from "./separator";
 
 type Props = {
   _id: Id<"listItems">;
@@ -25,21 +26,22 @@ export default function EditableShoppingListItem({
 
   return (
     <li key={_id}>
-      <div className="w-full grid grid-cols-[1fr_auto_20%_auto_1fr_auto] items-center gap-0">
+      <div className="w-full grid grid-cols-[1fr_auto_1fr_auto_1fr_auto] items-center gap-0">
         <EditableListBase
           value={content}
           onSave={(val: string) =>
             updateItem({ listItemId: _id, content: val, shopName, quantity })
           }
         />
-        <p className="text-center text-muted-foreground">|</p>
+        <Separator orientation="vertical" className="mx-2" />
         <EditableListBase
           value={shopName}
           onSave={(val: string) =>
             updateItem({ listItemId: _id, content, shopName: val, quantity })
           }
+          className="text-center"
         />
-        <p className="text-center text-muted-foreground">|</p>
+        <Separator orientation="vertical" className="mx-2" />
         <EditableListBase
           value={quantity?.toString() || ""}
           numeric
@@ -51,8 +53,11 @@ export default function EditableShoppingListItem({
               quantity: Number(val),
             })
           }
+          className="text-end pr-2"
         />
-        <DeleteListItemButton _id={_id} />
+        <div className="flex justify-end">
+          <DeleteListItemButton _id={_id} />
+        </div>
       </div>
     </li>
   );
