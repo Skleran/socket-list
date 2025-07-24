@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { AnimatePresence, easeOut, motion } from "motion/react";
+import HeroImages from "@/components/ui/hero-images";
+import BackgroundGradient from "@/components/ui/bg-gradient";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
@@ -37,6 +39,7 @@ export default function SignIn() {
 
   return (
     <AnimatePresence>
+      <BackgroundGradient key={"bg"} />
       <motion.div
         variants={animationVariants}
         initial={"hidden"}
@@ -45,7 +48,7 @@ export default function SignIn() {
       >
         <motion.div
           variants={childVariants}
-          className="bg-accent-foreground text-accent py-1.5 px-3 rounded-4xl"
+          className="bg-accent-foreground text-accent py-1.5 px-3 rounded-4xl hover:bg-background hover:shadow-xl hover:shadow-accent-foreground/20 dark:hover:shadow-accent-foreground/15 hover:text-accent-foreground transition-all duration-400"
         >
           {/* <p className="">one list, everyone&#8217;s updates</p> */}
           <p className="">shared lists, made simple</p>
@@ -56,7 +59,7 @@ export default function SignIn() {
               <motion.span
                 key={idx}
                 variants={childVariants}
-                className="inline-block"
+                className="inline-block hover:font-extrabold transition-all duration-300"
               >
                 {word}
                 {idx < arr.length - 1 ? "\u00A0" : ""}
@@ -70,7 +73,7 @@ export default function SignIn() {
                 <motion.span
                   key={idx}
                   variants={childVariants}
-                  className="inline-block"
+                  className="inline-block hover:font-extrabold transition-all duration-300"
                 >
                   {word}
                   {idx < arr.length - 1 ? "\u00A0" : ""}
@@ -192,6 +195,7 @@ export default function SignIn() {
           </div>
         </div>
       </motion.div>
+      <HeroImages key={"images"} />
     </AnimatePresence>
   );
 }
