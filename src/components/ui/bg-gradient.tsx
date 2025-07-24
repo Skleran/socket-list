@@ -1,11 +1,17 @@
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function BackgroundGradient() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   const gradient =
-    theme === "dark"
-      ? "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)"
+    resolvedTheme === "dark"
+      ? "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)"
       : "radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 70%)";
 
   return (

@@ -46,11 +46,11 @@ export default function HeroImages() {
       initial={"hidden"}
       animate={"visible"}
       key={"qwe"}
-      className="relative mt-10"
+      className="flex flex-col items-center gap-8 sm:relative mt-10 mb-8"
     >
       <motion.div
         variants={childVariants}
-        className="bg-background hover:scale-105 hover:z-15 transition-all duration-400 ease-out absolute left-[50%] size-[350px] -translate-x-[50%] ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/10 shadow-2xl overflow-hidden z-10"
+        className="bg-background hover:scale-105 hover:z-15 transition-all duration-400 ease-out sm:absolute left-[50%] max-w-screen size-[350px] sm:-translate-x-[50%] ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/7 shadow-2xl overflow-hidden z-10"
       >
         <Image
           src={images.img1Dark}
@@ -67,7 +67,7 @@ export default function HeroImages() {
       </motion.div>
       <motion.div
         variants={childVariants}
-        className="bg-background hover:scale-105 hover:-rotate-3 hover:-translate-x-5 hover:z-15 transition-all duration-400 ease-out absolute left-0 top-10 ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/10 shadow-2xl overflow-hidden size-[350px] z-5"
+        className="bg-background hover:scale-105 hover:-rotate-3 hover:-translate-x-5 hover:z-15 transition-all duration-400 ease-out sm:absolute left-0 top-10 ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/7 shadow-2xl overflow-hidden max-w-screen size-[350px] z-5"
       >
         <Image
           src={images.img2Dark}
@@ -84,7 +84,7 @@ export default function HeroImages() {
       </motion.div>
       <motion.div
         variants={childVariants}
-        className="bg-background hover:scale-105 hover:rotate-3 hover:translate-x-5 hover:z-15 transition-all duration-400 ease-out absolute right-0 top-10 ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/10 shadow-2xl overflow-hidden size-[350px] z-5"
+        className="bg-background hover:scale-105 hover:rotate-3 hover:translate-x-5 hover:z-15 transition-all duration-400 ease-out sm:absolute right-0 top-10 ring ring-accent-foreground/5 rounded-xl shadow-accent-foreground/15 dark:shadow-accent-foreground/7 shadow-2xl overflow-hidden max-w-screen size-[350px] z-5"
       >
         <Image
           src={images.img3Dark}
