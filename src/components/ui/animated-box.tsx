@@ -25,6 +25,34 @@ export default function UserBox() {
 
   const user = useQuery(api.users.currentUser, {});
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        isExpanded
+      ) {
+        handleClose();
+      }
+    };
+
+    const handleScroll = () => {
+      if (isExpanded) {
+        handleClose();
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll, true);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll, true);
+    };
+  }, [isExpanded]);
+
   if (user === null) return null;
 
   const boxVariants: Variants = {
@@ -96,34 +124,6 @@ export default function UserBox() {
       setIsExpanded(false);
     }
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node) &&
-        isExpanded
-      ) {
-        handleClose();
-      }
-    };
-
-    const handleScroll = () => {
-      if (isExpanded) {
-        handleClose();
-      }
-    };
-
-    if (isExpanded) {
-      document.addEventListener("mousedown", handleClickOutside);
-      window.addEventListener("scroll", handleScroll, true);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll, true);
-    };
-  }, [isExpanded]);
 
   const renderBackdrop = () => {
     if (typeof document !== "undefined") {
