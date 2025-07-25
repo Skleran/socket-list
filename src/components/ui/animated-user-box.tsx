@@ -26,6 +26,12 @@ export default function UserBox() {
 
   const user = useQuery(api.users.currentUser, {});
 
+  const handleClose = useCallback(() => {
+    if (isExpanded) {
+      setIsExpanded(false);
+    }
+  }, [isExpanded]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -52,7 +58,7 @@ export default function UserBox() {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("scroll", handleScroll, true);
     };
-  }, [isExpanded]);
+  }, [isExpanded, handleClose]);
 
   if (user === null) return null;
 
@@ -119,12 +125,6 @@ export default function UserBox() {
       setIsHidden(true);
     }
   };
-
-  const handleClose = useCallback(() => {
-    if (isExpanded) {
-      setIsExpanded(false);
-    }
-  }, [isExpanded]);
 
   const renderBackdrop = () => {
     if (typeof document !== "undefined") {
