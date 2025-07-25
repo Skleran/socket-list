@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
-import { MoreHorizontal } from "lucide-react";
+import { Check, Copy, MoreHorizontal, QrCode } from "lucide-react";
 import { Select, SelectGroup, SelectLabel } from "./select";
 import {
   SelectContent,
@@ -14,6 +14,8 @@ import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import CollabsList from "./collabs-list";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./dialog";
+import QRCode from "react-qr-code";
 
 type Props = {
   currentVisibility: Visibility;
@@ -24,6 +26,18 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
   const [visibility, setVisibility] = useState<Visibility>(
     currentVisibility as Visibility
   );
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    const url = `${window.location.origin}/${listId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+    }
+  };
 
   const updateVisibility = useMutation(api.lists.updateListVisibility);
 
@@ -47,8 +61,43 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
       </PopoverTrigger>
       <PopoverContent className="w-64">
         <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="leading-none font-medium">list settings</h4>
+          <div className="space-y-2 flex items-center justify-between">
+            <h4 className="leading-none font-medium">List Settings</h4>
+            <div className="grid grid-cols-2 gap-1">
+              <Button
+                onClick={handleCopy}
+                className={`transition-all ${copied ? "bg-green-400 hover:bg-green-400 dark:bg-green-500 hover:dark:bg-green-500" : ""}`}
+                variant={"ghost"}
+                size={"icon"}
+              >
+                {copied ? (
+                  <Check />
+                ) : (
+                  <>
+                    <Copy />
+                  </>
+                )}
+              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant={"ghost"} size={"icon"}>
+                    <QrCode />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
+                  <DialogTitle className="text-lg font-medium">
+                    Scan to Open List
+                  </DialogTitle>
+                  <QRCode
+                    value={`${window.location.origin}/${listId}`}
+                    size={180}
+                    bgColor="transparent"
+                    className="rounded-md dark:bg-accent-foreground p-4"
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
           <div className="grid gap-2 w-full">
             {/* <p className="text-muted-foreground text-sm">
@@ -70,17 +119,17 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>select list visibility</SelectLabel>
-                  <SelectItem value="private">private</SelectItem>
-                  <SelectItem value="public-read">public read-only</SelectItem>
-                  <SelectItem value="public-edit">public edit</SelectItem>
+                  <SelectLabel>Select List Visibility</SelectLabel>
+                  <SelectItem value="private">Private</SelectItem>
+                  <SelectItem value="public-read">Public Read-only</SelectItem>
+                  <SelectItem value="public-edit">Public Edit</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
           <div className="border-b-1 my-1" />
           <div className="space-y-2">
-            <h4 className="leading-none font-medium">collaborators</h4>
+            <h4 className="leading-none font-medium">Collaborators</h4>
           </div>
           <CollabsList listId={listId} />
         </div>

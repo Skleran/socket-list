@@ -11,9 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { easeOut, motion, Variants } from "framer-motion";
 import type { Transition } from "framer-motion";
-import { Copy, MoreVertical, QrCode } from "lucide-react";
+import { Copy, MoreVertical, QrCode, X } from "lucide-react";
 import { Separator } from "./separator";
 import { Id } from "../../../convex/_generated/dataModel";
+import { HoldToDeleteButton } from "./hold-to-delete-button";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 type Props = {
   listId: Id<"lists">;
@@ -24,6 +27,8 @@ export default function AnimatedListToolbox({ listId }: Props) {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const motionDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const deleteList = useMutation(api.lists.deleteList);
+
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -80,7 +85,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
     initial: {
       scale: 0.3,
       opacity: 0,
-      y: "-15px",
+      y: "-58px",
       filter: "blur(5px)",
     },
     expanded: {
@@ -155,17 +160,21 @@ export default function AnimatedListToolbox({ listId }: Props) {
           initial="initial"
           variants={boxVariants}
           transition={transition}
-          className="absolute top-0 right-0 border bg-card"
+          className={`absolute top-0 right-0 bg-card z-auto ${isExpanded ? "border" : "border-transparent"}`}
         >
           <Button
             variant="ghost"
             size="icon"
-            className={`hover:cursor-pointer bg-card transition-all h-10 w-10 rounded-full relative ${
-              isExpanded ? "" : "-m-1.5"
+            className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full relative ${
+              isExpanded ? "bg-accent" : "-m-1.5 bg-transparent"
             }`}
             onClick={handleClick}
           >
-            <MoreVertical className="size-5" />
+            {isExpanded ? (
+              <X className="size-5" />
+            ) : (
+              <MoreVertical className="size-5" />
+            )}
           </Button>
 
           <motion.div
@@ -213,9 +222,17 @@ export default function AnimatedListToolbox({ listId }: Props) {
             </Dialog>
 
             <Separator className="bg-accent-foreground/30" />
-            <Button variant={"destructive"} className="w-full rounded-xl h-10">
+            {/* <Button variant={"destructive"} className="w-full rounded-xl h-10">
               Delete List
-            </Button>
+            </Button> */}
+            <HoldToDeleteButton
+              onHoldComplete={() => {
+                void deleteList({ listId });
+              }}
+              // key={"delete"}
+              className="rounded-xl h-10 text-nowrap"
+              buttonClass="bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60"
+            />
           </motion.div>
         </motion.div>
       </div>

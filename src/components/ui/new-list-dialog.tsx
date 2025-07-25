@@ -76,7 +76,7 @@ export default function NewListDialog() {
               <p className="mx-auto text-sm">create new list</p>
             </Card>
           ) : (
-            <Card className="grid grid-cols-[auto_auto_auto] justify-center items-center gap-4 hover:cursor-pointer h-21">
+            <Card className="grid grid-cols-[auto_auto_auto] justify-center items-center gap-4 hover:cursor-pointer h-24">
               <Plus className="size-6" />
               <p className="text-base">create new list</p>
               <div></div>

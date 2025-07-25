@@ -177,6 +177,7 @@ export default function UserBox() {
                   alt="user profile image"
                   width={38}
                   height={38}
+                  draggable={false}
                   className={`rounded-full absolute inset-0 m-auto size-9.5 transition-opacity duration-400 z-1 ${isExpanded ? "opacity-0" : "opacity-100"}`}
                 />
                 <X className="size-4.5 absolute inset-0 m-auto" />

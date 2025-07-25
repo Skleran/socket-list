@@ -4,9 +4,11 @@ import { ListType } from "@/app/page";
 import { useQuery } from "convex-helpers/react/cache/hooks";
 import { api } from "../../../convex/_generated/api";
 import { Card } from "./card";
-import Link from "next/link";
+// import Link from "next/link";
 import { CheckSquare, ShoppingCart, List } from "lucide-react";
-import DeleteListButton from "./delete-list-button";
+// import DeleteListButton from "./delete-list-button";
+import AnimatedListToolbox from "./animated-list-toolbox";
+import { useRouter } from "next/navigation";
 
 type Props = {
   listId: Id<"lists">;
@@ -25,31 +27,43 @@ export default function HomeListCardGrid({ listId, title, type }: Props) {
     ),
   };
 
+  const router = useRouter();
+
   return (
     <div>
-      <Link href={listId} className="rounded-xl" key={listId}>
+      <div className="rounded-xl" key={listId}>
         <Card className="aspect-square p-2">
-          <div className="px-2 py-1 sm:px-3.5 sm:py-1.5">
-            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 border-b pb-1 mb-2">
+          <div className="px-2 py-1 sm:px-3.5 sm:py-1.5 h-full">
+            <div className="grid grid-cols-[16px_1fr_16px] items-center gap-2 border-b pb-1 mb-2">
               {typeIconMap[type]}
-              <h2 className="text-lg text-center font-semibold tracking-tight text-balance leading-6 py-0.5 line-clamp-2 break-words">
+              <h2
+                className="text-lg text-center font-semibold tracking-tight text-balance leading-6 py-0.5 line-clamp-2 break-words hover:cursor-pointer"
+                onClick={() => router.push(`/${listId}`)}
+              >
                 {title}
               </h2>
-              <DeleteListButton _id={listId} />
+              <div className="relative left-2">
+                <AnimatedListToolbox listId={listId} />
+              </div>
             </div>
-            <ul className="list-disc ml-4 text-sm space-y-1">
-              {items?.map((item) => (
-                <li key={item._id}>
-                  <p className="line-clamp-1 break-words">{item.content}</p>
-                </li>
-              ))}
-              {items && items.length === 0 && (
-                <li className="text-muted-foreground italic">empty list</li>
-              )}
-            </ul>
+            <div className="h-[80%] overflow-hidden">
+              <ul
+                className="list-disc ml-4 text-sm space-y-1 h-full hover:cursor-pointer"
+                onClick={() => router.push(`/${listId}`)}
+              >
+                {items?.map((item) => (
+                  <li key={item._id}>
+                    <p className="line-clamp-1 break-words">{item.content}</p>
+                  </li>
+                ))}
+                {items && items.length === 0 && (
+                  <li className="text-muted-foreground italic">empty list</li>
+                )}
+              </ul>
+            </div>
           </div>
         </Card>
-      </Link>
+      </div>
     </div>
   );
 }

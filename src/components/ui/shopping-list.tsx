@@ -42,9 +42,10 @@ export default function ShoppingList({ listId }: Props) {
                 <Dot className="size-7" />
                 {item.content}
                 <p className="text-center text-muted-foreground">|</p>
-                {item.shopName}
+                <p className="text-center">{item.shopName}</p>
+
                 <p className="text-center text-muted-foreground">|</p>
-                {item.quantity}
+                <p className="text-end pr-6">{item.quantity}</p>
               </li>
             )
           )}

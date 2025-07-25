@@ -90,7 +90,7 @@ export default function Lists() {
               key={`${_id}-${layoutMode}`}
               variants={cardVariants}
               layout
-              style={{ zIndex: lists.length - index }}
+              style={{ zIndex: 1 }}
             >
               {layoutMode === "grid" ? (
                 <HomeListCardGrid listId={_id} title={title} type={type} />
@@ -181,7 +181,7 @@ export default function Lists() {
                   key={`${_id}-${layoutMode}`}
                   variants={cardVariants}
                   layout
-                  style={{ zIndex: collabLists.length - index }}
+                  style={{ zIndex: 0 }}
                   transition={{
                     duration: 0.4,
                     ease: "easeOut",

@@ -2,11 +2,19 @@
 
 import React, { useRef } from "react";
 
+import { cn } from "@/lib/utils";
+
 type HoldToDeleteButtonProps = {
   onHoldComplete: () => void;
+  className?: string;
+  buttonClass?: string;
+  fillerClass?: string;
 };
 
 export function HoldToDeleteButton({
+  className,
+  buttonClass,
+  fillerClass,
   onHoldComplete,
 }: HoldToDeleteButtonProps) {
   const holdTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -31,11 +39,19 @@ export function HoldToDeleteButton({
       onMouseLeave={handleHoldEnd}
       onTouchStart={handleHoldStart}
       onTouchEnd={handleHoldEnd}
-      className="relative text-sm flex h-10 items-center justify-center gap-2 rounded-full bg-gray-100 px-6 font-medium text-gray-900 select-none transition-transform duration-150 ease-out active:scale-[0.97] group"
+      className={cn(
+        "relative hover:cursor-pointer text-sm flex h-10 items-center justify-center gap-2 rounded-full bg-gray-100 px-6 font-medium text-gray-900 select-none transition-transform duration-150 ease-out active:scale-[0.97] group",
+        className,
+        buttonClass
+      )}
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center gap-2 rounded-full bg-red-100 text-red-600 transition-all duration-200 ease-out group-active:transition-all group-active:duration-[1000ms] group-active:ease-linear [clip-path:inset(0px_100%_0px_0px)] group-active:[clip-path:inset(0px_0px_0px_0px)]"
+        className={cn(
+          "absolute inset-0 flex items-center justify-center gap-2 rounded-full bg-red-100 text-red-600 transition-all duration-200 ease-out group-active:transition-all group-active:duration-[1000ms] group-active:ease-linear [clip-path:inset(0px_100%_0px_0px)] group-active:[clip-path:inset(0px_0px_0px_0px)]",
+          className,
+          fillerClass
+        )}
       >
         <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
           <path
