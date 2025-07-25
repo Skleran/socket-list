@@ -85,20 +85,25 @@ export default function Lists() {
           animate="visible"
           exit="hidden"
         >
-          {lists?.map(({ _id, title, type }, index) => (
-            <motion.div
-              key={`${_id}-${layoutMode}`}
-              variants={cardVariants}
-              layout
-              style={{ zIndex: 1 }}
-            >
-              {layoutMode === "grid" ? (
-                <HomeListCardGrid listId={_id} title={title} type={type} />
-              ) : (
-                <HomeListCardList listId={_id} title={title} type={type} />
-              )}
-            </motion.div>
-          ))}
+          {lists?.map(
+            (
+              { _id, title, type }
+              // , index
+            ) => (
+              <motion.div
+                key={`${_id}-${layoutMode}`}
+                variants={cardVariants}
+                layout
+                style={{ zIndex: 1 }}
+              >
+                {layoutMode === "grid" ? (
+                  <HomeListCardGrid listId={_id} title={title} type={type} />
+                ) : (
+                  <HomeListCardList listId={_id} title={title} type={type} />
+                )}
+              </motion.div>
+            )
+          )}
 
           <motion.div
             variants={cardVariants}
@@ -176,32 +181,37 @@ export default function Lists() {
               animate="visible"
               exit="hidden"
             >
-              {collabLists?.map(({ _id, title, type }, index) => (
-                <motion.div
-                  key={`${_id}-${layoutMode}`}
-                  variants={cardVariants}
-                  layout
-                  style={{ zIndex: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    ease: "easeOut",
-                  }}
-                >
-                  {layoutMode === "grid" ? (
-                    <HomeCollaboratedListCardGrid
-                      listId={_id}
-                      title={title}
-                      type={type}
-                    />
-                  ) : (
-                    <HomeCollaboratedListCardList
-                      listId={_id}
-                      title={title}
-                      type={type}
-                    />
-                  )}
-                </motion.div>
-              ))}
+              {collabLists?.map(
+                (
+                  { _id, title, type }
+                  // , index
+                ) => (
+                  <motion.div
+                    key={`${_id}-${layoutMode}`}
+                    variants={cardVariants}
+                    layout
+                    style={{ zIndex: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      ease: "easeOut",
+                    }}
+                  >
+                    {layoutMode === "grid" ? (
+                      <HomeCollaboratedListCardGrid
+                        listId={_id}
+                        title={title}
+                        type={type}
+                      />
+                    ) : (
+                      <HomeCollaboratedListCardList
+                        listId={_id}
+                        title={title}
+                        type={type}
+                      />
+                    )}
+                  </motion.div>
+                )
+              )}
             </motion.div>
           </AnimatePresence>
         </>

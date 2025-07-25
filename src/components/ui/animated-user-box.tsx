@@ -3,7 +3,7 @@
 import { UserRound, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { easeOut, motion, Variants, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 // import { LogoutButton } from "../ui/logout-button";
 import ReactDOM from "react-dom";
 import ChangeThemeTabs from "../ui/theme-selector";
@@ -120,11 +120,11 @@ export default function UserBox() {
     }
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (isExpanded) {
       setIsExpanded(false);
     }
-  };
+  }, [isExpanded]);
 
   const renderBackdrop = () => {
     if (typeof document !== "undefined") {

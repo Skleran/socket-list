@@ -32,6 +32,12 @@ export default function AnimatedListToolbox({ listId }: Props) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    const handleClose = () => {
+      if (isExpanded) {
+        setIsExpanded(false);
+      }
+    };
+
     const handleClickOutside = (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
@@ -131,11 +137,11 @@ export default function AnimatedListToolbox({ listId }: Props) {
     }
   };
 
-  const handleClose = () => {
-    if (isExpanded) {
-      setIsExpanded(false);
-    }
-  };
+  // const handleClose = () => {
+  //   if (isExpanded) {
+  //     setIsExpanded(false);
+  //   }
+  // };
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/${listId}`;
