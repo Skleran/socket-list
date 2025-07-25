@@ -62,6 +62,18 @@ export const getPreviewItems = query({
   },
 });
 
+export const getNumberOfItems = query({
+  args: { listId: v.id("lists") },
+  handler: async (ctx, args) => {
+    const items = await ctx.db
+      .query("listItems")
+      .withIndex("by_list", (q) => q.eq("listId", args.listId))
+      .collect();
+
+    return items.length;
+  },
+});
+
 // default list item functions
 export const createDefaultListItem = mutation({
   args: {

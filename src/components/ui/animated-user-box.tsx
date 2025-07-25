@@ -16,6 +16,7 @@ import { api } from "../../../convex/_generated/api";
 import Image from "next/image";
 
 import type { Transition } from "framer-motion";
+import ListLayoutSelector from "./list-layout-selector";
 
 export default function UserBox() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -193,16 +194,17 @@ export default function UserBox() {
             variants={innerBoxVariants}
             transition={transition}
             onAnimationComplete={handleAnimationComplete}
-            className={`w-full h-[calc(100%-45px)] rounded-2xl p-2 flex flex-col items-end justify-between overflow-hidden bg-accent-foreground/5 ${
+            className={`w-full h-[calc(100%-45px)] rounded-2xl p-2 flex flex-col items-center justify-between overflow-hidden bg-accent-foreground/5 ${
               isHidden ? "hidden" : ""
             }`}
           >
-            <div className="w-full h-fit flex flex-col">
+            <div className="w-full text-center h-fit flex flex-col">
               <p className="text-sm leading-4">{user?.name}</p>
             </div>
-            <div className="w-full h-full flex flex-col items-center justify-around mb-1 rounded-lg">
-              <div className="w-full h-[45%] "></div>
+            <div>
+              <ListLayoutSelector />
             </div>
+
             <div className="w-full h-fit flex flex-col items-center gap-4 justify-between">
               <ChangeThemeTabs animationKey="change-theme" />
               <SignOut />

@@ -3,7 +3,7 @@ import { Button } from "./button";
 import { isAuthenticatedNextjs } from "@convex-dev/auth/nextjs/server";
 // import UserDetails from "./user-details";
 import ChangeThemeTabs from "./theme-selector";
-import UserBox from "./animated-box";
+import UserBox from "./animated-user-box";
 
 export default async function Navbar() {
   return (
@@ -20,9 +20,9 @@ export default async function Navbar() {
         ) : (
           <div className="flex items-center gap-2">
             <ChangeThemeTabs animationKey="theme" key={"theme"} />
-            <Button variant={"default"} size={"sm"}>
+            {/* <Button variant={"default"} size={"sm"}>
               get started
-            </Button>
+            </Button> */}
           </div>
         )}
       </div>
