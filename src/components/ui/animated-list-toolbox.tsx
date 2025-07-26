@@ -243,7 +243,9 @@ export default function AnimatedListToolbox({ listId }: Props) {
         aria-haspopup="menu"
         aria-label="List options menu"
       >
-        <MoreVertical className="size-5" />
+        <MoreVertical
+          className={`size-5 transition-opacity ${isExpanded ? "opacity-0" : "opacity-100"}`}
+        />
       </Button>
 
       {hasMounted &&

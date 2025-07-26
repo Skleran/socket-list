@@ -42,7 +42,18 @@ export default function HomeListCardList({ listId, title, type }: Props) {
   return (
     <div>
       {/* <Link href={listId} className="rounded-xl" key={listId}> */}
-      <Card className="p-3 py-4">
+      <Card
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            router.push(`/${listId}`);
+          }
+        }}
+        onClick={(e) => e.preventDefault()}
+        className="p-3 py-4 transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      >
         <div className="px-2 sm:px-3.5 sm:py-1.5 flex items-center justify-between gap-8">
           <div
             className="flex flex-col gap-2.5 w-full hover:cursor-pointer"

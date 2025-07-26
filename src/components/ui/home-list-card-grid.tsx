@@ -32,7 +32,18 @@ export default function HomeListCardGrid({ listId, title, type }: Props) {
   return (
     <div>
       <div className="rounded-xl" key={listId}>
-        <Card className="aspect-square p-2">
+        <Card
+          role="link"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              router.push(`/${listId}`);
+            }
+          }}
+          onClick={(e) => e.preventDefault()}
+          className="aspect-square p-2 transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+        >
           <div className="px-2 py-1 sm:px-3.5 sm:py-1.5 h-full">
             <div className="grid grid-cols-[16px_1fr_16px] items-center gap-2 border-b pb-1 mb-2">
               {typeIconMap[type]}
