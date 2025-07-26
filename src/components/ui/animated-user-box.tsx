@@ -132,7 +132,7 @@ export default function UserBox() {
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              className="fixed inset-0 bg-black/15 backdrop-blur-xs z-9"
+              className="fixed inset-0 bg-black/25 backdrop-blur-[2px]  z-9"
               initial="hidden"
               animate="visible"
               exit="hidden"
@@ -202,7 +202,11 @@ export default function UserBox() {
             <div className="w-full text-center h-fit flex flex-col">
               <p className="text-sm leading-4">{user?.name}</p>
             </div>
-            <div>
+            <div className="flex gap-3 items-center text-center">
+              <p className=" leading-4.5">
+                Home
+                <br /> Layout:
+              </p>
               <ListLayoutSelector />
             </div>
 

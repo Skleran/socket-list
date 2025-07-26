@@ -7,6 +7,7 @@ import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexQueryCacheProvider } from "convex-helpers/react/cache/provider";
 import Navbar from "@/components/ui/navbar";
 import { LayoutProvider } from "@/components/ui/layout-context";
+// import { Toaster } from "@/components/ui/sonner";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -42,6 +43,7 @@ export default function RootLayout({
                     <Navbar />
                     {children}
                   </main>
+                  {/* <Toaster /> */}
                 </LayoutProvider>
               </ThemeProvider>
             </ConvexQueryCacheProvider>

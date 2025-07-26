@@ -25,20 +25,82 @@ type Props = {
 
 export default function AnimatedListToolbox({ listId }: Props) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  // const [isHidden, setIsHidden] = useState<boolean>(true);
   const iconRef = useRef<HTMLButtonElement>(null);
   const [toolboxPosition, setToolboxPosition] = useState({ top: 0, left: 0 });
   const motionDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const deleteList = useMutation(api.lists.deleteList);
   const [shouldRender, setShouldRender] = useState(false);
+  const [openedWithKeyboard, setOpenedWithKeyboard] = useState(false);
+  // const [isListDeleted, setIsListDeleted] = useState(false);
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const copyButtonRef = useRef<HTMLButtonElement>(null);
+  const qrButtonRef = useRef<HTMLButtonElement>(null);
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   const [copied, setCopied] = useState(false);
+
+  // focus management when opening
+  useEffect(() => {
+    if (isExpanded && openedWithKeyboard) {
+      setTimeout(() => {
+        closeButtonRef.current?.focus();
+      }, 50);
+    }
+  }, [isExpanded, openedWithKeyboard]);
+
+  // trap focus in the box
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsExpanded(false);
+        iconRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const focusableElements = [
+          closeButtonRef.current,
+          copyButtonRef.current,
+          qrButtonRef.current,
+          deleteButtonRef.current,
+        ].filter(Boolean);
+
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        const currentIndex = focusableElements.indexOf(
+          document.activeElement as HTMLButtonElement
+        );
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || currentIndex === -1) {
+            e.preventDefault();
+            lastElement?.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement || currentIndex === -1) {
+            e.preventDefault();
+            firstElement?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isExpanded]);
 
   useEffect(() => {
     const handleClose = () => {
       if (isExpanded) {
         setIsExpanded(false);
+
+        iconRef.current?.focus();
       }
     };
 
@@ -74,6 +136,12 @@ export default function AnimatedListToolbox({ listId }: Props) {
     };
   }, [isExpanded]);
 
+  // useEffect(() => {
+  //   if (isListDeleted) {
+  //     // maybe add opacity or other visual changes here
+  //   }
+  // }, [isListDeleted]);
+
   const boxVariants: Variants = {
     initial: {
       width: "0px",
@@ -82,6 +150,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
       borderRadius: "9px",
       padding: "0px",
       overflow: "hidden",
+      opacity: 0,
     },
     expanded: {
       width: "180px",
@@ -89,32 +158,22 @@ export default function AnimatedListToolbox({ listId }: Props) {
       zIndex: 3,
       borderRadius: "20px",
       padding: "4px",
+      opacity: 1,
     },
   };
 
   const innerBoxVariants: Variants = {
     initial: {
       scale: 0.3,
-      opacity: 0,
       y: "-58px",
       filter: "blur(5px)",
     },
     expanded: {
       scale: 1,
-      opacity: 1,
       y: "0px",
       filter: "blur(0px)",
     },
   };
-
-  // const backdropVariants: Variants = {
-  //   hidden: {
-  //     opacity: 0,
-  //   },
-  //   visible: {
-  //     opacity: 1,
-  //   },
-  // };
 
   const transition: Transition = {
     duration: 0.3,
@@ -122,15 +181,16 @@ export default function AnimatedListToolbox({ listId }: Props) {
     stiffness: 50,
     ease: easeOut,
   };
-  // const backdropTransition: Transition = { duration: 0.2, ease: "easeInOut" };
 
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => setHasMounted(true), []);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
     e.preventDefault();
+
+    const wasKeyboard = "key" in e ? e.key === "Enter" || e.key === " " : false;
 
     if (!isExpanded && iconRef.current) {
       const rect = iconRef.current.getBoundingClientRect();
@@ -139,24 +199,16 @@ export default function AnimatedListToolbox({ listId }: Props) {
         left: rect.left + window.scrollX,
       });
 
+      setOpenedWithKeyboard(wasKeyboard);
       setShouldRender(true);
       setTimeout(() => setIsExpanded(true), 10);
     } else {
       setIsExpanded(false);
+      if (wasKeyboard) {
+        iconRef.current?.focus();
+      }
     }
   };
-
-  // const handleAnimationComplete = (definition: string) => {
-  //   if (definition === "initial") {
-  //     // setIsHidden(true);
-  //   }
-  // };
-
-  // const handleClose = () => {
-  //   if (isExpanded) {
-  //     setIsExpanded(false);
-  //   }
-  // };
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/${listId}`;
@@ -169,6 +221,11 @@ export default function AnimatedListToolbox({ listId }: Props) {
     }
   };
 
+  const handleClose = () => {
+    setIsExpanded(false);
+    iconRef.current?.focus();
+  };
+
   return (
     <>
       <Button
@@ -177,12 +234,16 @@ export default function AnimatedListToolbox({ listId }: Props) {
         size="icon"
         className={`hover:cursor-pointer -m-1.5 transition-all h-10 w-10 rounded-full relative`}
         onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleClick(e);
+          }
+        }}
+        aria-expanded={isExpanded}
+        aria-haspopup="menu"
+        aria-label="List options menu"
       >
-        {isExpanded ? (
-          <X className="size-5" />
-        ) : (
-          <MoreVertical className="size-5" />
-        )}
+        <MoreVertical className="size-5" />
       </Button>
 
       {hasMounted &&
@@ -196,8 +257,9 @@ export default function AnimatedListToolbox({ listId }: Props) {
               top: toolboxPosition.top,
               left: toolboxPosition.left,
             }}
+            role="menu"
+            aria-label="List options"
           >
-            {" "}
             <motion.div
               animate={isExpanded ? "expanded" : "initial"}
               initial="initial"
@@ -205,13 +267,13 @@ export default function AnimatedListToolbox({ listId }: Props) {
               transition={transition}
               onAnimationComplete={(definition) => {
                 if (definition === "initial") {
-                  setShouldRender(false); // unmount AFTER collapse animation finishes
+                  setShouldRender(false);
                 }
               }}
               className={`absolute top-0 right-0 bg-card z-auto ${isExpanded ? "border" : "border-transparent"}`}
             >
               <Button
-                // ref={iconRef}
+                ref={closeButtonRef}
                 variant="ghost"
                 size="icon"
                 className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full relative ${
@@ -219,7 +281,9 @@ export default function AnimatedListToolbox({ listId }: Props) {
                     ? "hover:bg-accent opacity-100"
                     : "-m-1.5 bg-transparent opacity-0"
                 }`}
-                onClick={handleClick}
+                onClick={handleClose}
+                aria-label="Close menu"
+                tabIndex={isExpanded ? 0 : -1}
               >
                 <X className="size-5" />
               </Button>
@@ -230,12 +294,14 @@ export default function AnimatedListToolbox({ listId }: Props) {
                 initial="initial"
                 variants={innerBoxVariants}
                 transition={transition}
-                // onAnimationComplete={handleAnimationComplete}
                 className={`w-full h-[141px] rounded-2xl p-1 flex flex-col items-center gap-1 overflow-hidden bg-accent-foreground/5`}
               >
                 <Button
+                  ref={copyButtonRef}
                   onClick={handleCopy}
                   className={`w-full rounded-t-xl h-10 transition-all ${copied ? "bg-green-400 hover:bg-green-400 dark:bg-green-500 hover:dark:bg-green-500" : ""}`}
+                  tabIndex={isExpanded ? 0 : -1}
+                  role="menuitem"
                 >
                   {copied ? (
                     <>Copied!</>
@@ -248,7 +314,12 @@ export default function AnimatedListToolbox({ listId }: Props) {
                 </Button>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="w-full rounded-b-xl h-10">
+                    <Button
+                      ref={qrButtonRef}
+                      className="w-full rounded-b-xl h-10"
+                      tabIndex={isExpanded ? 0 : -1}
+                      role="menuitem"
+                    >
                       <QrCode />
                       Display QR Code
                     </Button>
@@ -267,16 +338,16 @@ export default function AnimatedListToolbox({ listId }: Props) {
                 </Dialog>
 
                 <Separator className="bg-accent-foreground/30" />
-                {/* <Button variant={"destructive"} className="w-full rounded-xl h-10">
-              Delete List
-            </Button> */}
                 <HoldToDeleteButton
+                  ref={deleteButtonRef}
                   onHoldComplete={() => {
                     void deleteList({ listId });
+                    setIsExpanded(false);
                   }}
-                  // key={"delete"}
                   className="rounded-xl h-10 text-nowrap"
                   buttonClass="bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60"
+                  tabIndex={isExpanded ? 0 : -1}
+                  role="menuitem"
                 />
               </motion.div>
             </motion.div>

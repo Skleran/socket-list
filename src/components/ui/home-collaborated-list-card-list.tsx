@@ -21,7 +21,7 @@ export default function HomeCollaboratedListCardList({
   title,
   type,
 }: Props) {
-  const items = useQuery(api.listItems.getPreviewItems, { listId });
+  const items = useQuery(api.listItems.getNumberOfItems, { listId });
 
   const typeIconMap: Record<ListType, React.ReactNode> = {
     DEFAULT: <List className="size-5 text-muted-foreground flex-none" />,
@@ -52,11 +52,7 @@ export default function HomeCollaboratedListCardList({
                 {typeIconMap[type]}
                 {/* <Dot className="" /> */}
                 <Separator orientation="vertical" />
-                {items?.length === 0 ? (
-                  <p>empty list</p>
-                ) : (
-                  <p>{items && items.length} items</p>
-                )}
+                {items === 0 ? <p>empty list</p> : <p>{items} items</p>}
               </div>
             </div>
             <div>
