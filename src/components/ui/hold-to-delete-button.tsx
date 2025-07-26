@@ -28,6 +28,7 @@ export const HoldToDeleteButton = forwardRef<
     },
     ref
   ) => {
+    HoldToDeleteButton.displayName = "HoldToDeleteButton";
     const holdTimeout = useRef<NodeJS.Timeout | null>(null);
     const deleteTimeout = useRef<NodeJS.Timeout | null>(null);
     const [isHolding, setIsHolding] = useState(false);
@@ -86,8 +87,12 @@ export const HoldToDeleteButton = forwardRef<
 
     useEffect(() => {
       return () => {
-        if (holdTimeout.current) clearTimeout(holdTimeout.current);
-        if (deleteTimeout.current) clearTimeout(deleteTimeout.current);
+        const holdTimeoutId = holdTimeout.current;
+        const deleteTimeoutId = deleteTimeout.current;
+
+        if (holdTimeoutId) clearTimeout(holdTimeoutId);
+        if (deleteTimeoutId) clearTimeout(deleteTimeoutId);
+
         setIsKeyDown(false);
       };
     }, []);
