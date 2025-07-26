@@ -39,7 +39,7 @@ export default function ChangeThemeTabs({
 
   return (
     <div
-      className="inline-flex h-[42px] space-x-1 border rounded-full dark:border-neutral-800 p-1"
+      className="inline-flex h-[42px] bg-card space-x-1 border rounded-full dark:border-neutral-800 p-1"
       ref={ref}
     >
       {tabs.map((tab) => (
@@ -48,7 +48,7 @@ export default function ChangeThemeTabs({
           onClick={() => toggleTheme(tab.id)}
           aria-label={"changeTheme"}
           className={cn(
-            "relative hover:cursor-pointer rounded-full p-2 text-sm font-medium text-black dark:text-white outline-sky-400 focus-visible:outline-2 z-[20] hover:bg-black/15 dark:hover:bg-white/15 transition-all duration-300",
+            "relative hover:cursor-pointer rounded-full p-2 text-sm font-medium text-black dark:text-white focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] z-[20] hover:bg-black/15 dark:hover:bg-white/15 transition-all duration-300",
             activeTab === tab.id && "text-white dark:text-black"
           )}
           style={{

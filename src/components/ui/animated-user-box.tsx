@@ -229,7 +229,7 @@ export default function UserBox() {
         ref={iconRef}
         variant="ghost"
         size="icon"
-        className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full bg-accent relative -m-1.5`}
+        className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full bg-accent relative -m-1.5 mr-[0px]`}
         onClick={handleClick}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -306,16 +306,13 @@ export default function UserBox() {
                 initial="initial"
                 variants={innerBoxVariants}
                 transition={transition}
-                className={`w-full h-[calc(100%-45px)] rounded-2xl p-2 flex flex-col items-center justify-between overflow-hidden bg-accent-foreground/5`}
+                className={`w-full h-[calc(100%-40px)] rounded-2xl p-2 flex flex-col items-center justify-between overflow-hidden bg-accent-foreground/5`}
               >
                 <div className="w-full text-center h-fit flex flex-col">
                   <p className="text-sm leading-4">{user?.name}</p>
                 </div>
                 <div className="flex gap-3 items-center text-center">
-                  <p className=" leading-4.5">
-                    Home
-                    <br /> Layout:
-                  </p>
+                  <p className="leading-0">Layout:</p>
                   <ListLayoutSelector />
                 </div>
 
