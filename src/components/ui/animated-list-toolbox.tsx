@@ -17,6 +17,7 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { HoldToDeleteButton } from "./hold-to-delete-button";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { createPortal } from "react-dom";
 
 type Props = {
   listId: Id<"lists">;
@@ -24,10 +25,13 @@ type Props = {
 
 export default function AnimatedListToolbox({ listId }: Props) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [isHidden, setIsHidden] = useState<boolean>(true);
+  // const [isHidden, setIsHidden] = useState<boolean>(true);
+  const iconRef = useRef<HTMLButtonElement>(null);
+  const [toolboxPosition, setToolboxPosition] = useState({ top: 0, left: 0 });
   const motionDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const deleteList = useMutation(api.lists.deleteList);
+  const [shouldRender, setShouldRender] = useState(false);
 
   const [copied, setCopied] = useState(false);
 
@@ -72,11 +76,12 @@ export default function AnimatedListToolbox({ listId }: Props) {
 
   const boxVariants: Variants = {
     initial: {
-      width: "28px",
-      height: "28px",
-      zIndex: 0,
+      width: "0px",
+      height: "0px",
+      zIndex: -1,
       borderRadius: "9px",
       padding: "0px",
+      overflow: "hidden",
     },
     expanded: {
       width: "180px",
@@ -119,23 +124,33 @@ export default function AnimatedListToolbox({ listId }: Props) {
   };
   // const backdropTransition: Transition = { duration: 0.2, ease: "easeInOut" };
 
-  const handleClick = async (e: React.MouseEvent) => {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => setHasMounted(true), []);
+
+  const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
 
-    if (!isExpanded) {
-      setIsHidden(false);
+    if (!isExpanded && iconRef.current) {
+      const rect = iconRef.current.getBoundingClientRect();
+      setToolboxPosition({
+        top: rect.top + window.scrollY,
+        left: rect.left + window.scrollX,
+      });
+
+      setShouldRender(true);
       setTimeout(() => setIsExpanded(true), 10);
     } else {
       setIsExpanded(false);
     }
   };
 
-  const handleAnimationComplete = (definition: string) => {
-    if (definition === "initial") {
-      setIsHidden(true);
-    }
-  };
+  // const handleAnimationComplete = (definition: string) => {
+  //   if (definition === "initial") {
+  //     // setIsHidden(true);
+  //   }
+  // };
 
   // const handleClose = () => {
   //   if (isExpanded) {
@@ -156,92 +171,118 @@ export default function AnimatedListToolbox({ listId }: Props) {
 
   return (
     <>
-      <div
-        ref={containerRef}
-        className="w-fit h-fit flex items-baseline justify-end relative z-15 translate-x-[4px] translate-y-[-15px]"
+      <Button
+        ref={iconRef}
+        variant="ghost"
+        size="icon"
+        className={`hover:cursor-pointer -m-1.5 transition-all h-10 w-10 rounded-full relative`}
+        onClick={handleClick}
       >
-        {" "}
-        <motion.div
-          animate={isExpanded ? "expanded" : "initial"}
-          initial="initial"
-          variants={boxVariants}
-          transition={transition}
-          className={`absolute top-0 right-0 bg-card z-auto ${isExpanded ? "border" : "border-transparent"}`}
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full relative ${
-              isExpanded ? "bg-accent" : "-m-1.5 bg-transparent"
-            }`}
-            onClick={handleClick}
-          >
-            {isExpanded ? (
-              <X className="size-5" />
-            ) : (
-              <MoreVertical className="size-5" />
-            )}
-          </Button>
+        {isExpanded ? (
+          <X className="size-5" />
+        ) : (
+          <MoreVertical className="size-5" />
+        )}
+      </Button>
 
-          <motion.div
-            ref={motionDivRef}
-            animate={isExpanded ? "expanded" : "initial"}
-            initial="initial"
-            variants={innerBoxVariants}
-            transition={transition}
-            onAnimationComplete={handleAnimationComplete}
-            className={`w-full h-[141px] rounded-2xl p-1 flex flex-col items-center gap-1 overflow-hidden bg-accent-foreground/5 ${
-              isHidden ? "hidden" : ""
-            }`}
+      {hasMounted &&
+        shouldRender &&
+        createPortal(
+          <div
+            ref={containerRef}
+            className="absolute w-fit h-fit flex items-baseline justify-end z-50 translate-x-[40px] translate-y-[0px]"
+            style={{
+              position: "absolute",
+              top: toolboxPosition.top,
+              left: toolboxPosition.left,
+            }}
           >
-            <Button
-              onClick={handleCopy}
-              className={`w-full rounded-t-xl h-10 transition-all ${copied ? "bg-green-400 hover:bg-green-400 dark:bg-green-500 hover:dark:bg-green-500" : ""}`}
+            {" "}
+            <motion.div
+              animate={isExpanded ? "expanded" : "initial"}
+              initial="initial"
+              variants={boxVariants}
+              transition={transition}
+              onAnimationComplete={(definition) => {
+                if (definition === "initial") {
+                  setShouldRender(false); // unmount AFTER collapse animation finishes
+                }
+              }}
+              className={`absolute top-0 right-0 bg-card z-auto ${isExpanded ? "border" : "border-transparent"}`}
             >
-              {copied ? (
-                <>Copied!</>
-              ) : (
-                <>
-                  <Copy />
-                  Copy List Link
-                </>
-              )}
-            </Button>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="w-full rounded-b-xl h-10">
-                  <QrCode />
-                  Display QR Code
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
-                <DialogTitle className="text-lg font-medium">
-                  Scan to Open List
-                </DialogTitle>
-                <QRCode
-                  value={`${window.location.origin}/${listId}`}
-                  size={180}
-                  bgColor="transparent"
-                  className="rounded-md dark:bg-accent-foreground p-4"
-                />
-              </DialogContent>
-            </Dialog>
+              <Button
+                // ref={iconRef}
+                variant="ghost"
+                size="icon"
+                className={`hover:cursor-pointer transition-all h-10 w-10 rounded-full relative ${
+                  isExpanded
+                    ? "hover:bg-accent opacity-100"
+                    : "-m-1.5 bg-transparent opacity-0"
+                }`}
+                onClick={handleClick}
+              >
+                <X className="size-5" />
+              </Button>
 
-            <Separator className="bg-accent-foreground/30" />
-            {/* <Button variant={"destructive"} className="w-full rounded-xl h-10">
+              <motion.div
+                ref={motionDivRef}
+                animate={isExpanded ? "expanded" : "initial"}
+                initial="initial"
+                variants={innerBoxVariants}
+                transition={transition}
+                // onAnimationComplete={handleAnimationComplete}
+                className={`w-full h-[141px] rounded-2xl p-1 flex flex-col items-center gap-1 overflow-hidden bg-accent-foreground/5`}
+              >
+                <Button
+                  onClick={handleCopy}
+                  className={`w-full rounded-t-xl h-10 transition-all ${copied ? "bg-green-400 hover:bg-green-400 dark:bg-green-500 hover:dark:bg-green-500" : ""}`}
+                >
+                  {copied ? (
+                    <>Copied!</>
+                  ) : (
+                    <>
+                      <Copy />
+                      Copy List Link
+                    </>
+                  )}
+                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-full rounded-b-xl h-10">
+                      <QrCode />
+                      Display QR Code
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
+                    <DialogTitle className="text-lg font-medium">
+                      Scan to Open List
+                    </DialogTitle>
+                    <QRCode
+                      value={`${window.location.origin}/${listId}`}
+                      size={180}
+                      bgColor="transparent"
+                      className="rounded-md dark:bg-accent-foreground p-4"
+                    />
+                  </DialogContent>
+                </Dialog>
+
+                <Separator className="bg-accent-foreground/30" />
+                {/* <Button variant={"destructive"} className="w-full rounded-xl h-10">
               Delete List
             </Button> */}
-            <HoldToDeleteButton
-              onHoldComplete={() => {
-                void deleteList({ listId });
-              }}
-              // key={"delete"}
-              className="rounded-xl h-10 text-nowrap"
-              buttonClass="bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60"
-            />
-          </motion.div>
-        </motion.div>
-      </div>
+                <HoldToDeleteButton
+                  onHoldComplete={() => {
+                    void deleteList({ listId });
+                  }}
+                  // key={"delete"}
+                  className="rounded-xl h-10 text-nowrap"
+                  buttonClass="bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60"
+                />
+              </motion.div>
+            </motion.div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }

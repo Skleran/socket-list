@@ -94,7 +94,7 @@ export default function Lists() {
                 key={`${_id}-${layoutMode}`}
                 variants={cardVariants}
                 layout
-                style={{ zIndex: 1 }}
+                style={{ zIndex: 1 }} //??
               >
                 {layoutMode === "grid" ? (
                   <HomeListCardGrid listId={_id} title={title} type={type} />

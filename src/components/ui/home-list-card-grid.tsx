@@ -42,7 +42,7 @@ export default function HomeListCardGrid({ listId, title, type }: Props) {
               >
                 {title}
               </h2>
-              <div className="relative left-2">
+              <div className="relative -left-2">
                 <AnimatedListToolbox listId={listId} />
               </div>
             </div>
