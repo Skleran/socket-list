@@ -82,6 +82,7 @@
   },
   "List_Toolbox": {
     "copy": "Bağlantıyı Kopyala",
+    "copied": "Kopyalandı!",
     "qr": "QR Kodunu Göster",
     "qr_dialog": "Bu listeyi açmak için tarat",
     "delete": "Basılı tut ve sil",

@@ -82,6 +82,7 @@
   },
   "List_Toolbox": {
     "copy": "Copy Link",
+    "copied": "Copied!",
     "qr": "Show QR Code",
     "qr_dialog": "Scan to open list",
     "delete": "Hold to Delete",

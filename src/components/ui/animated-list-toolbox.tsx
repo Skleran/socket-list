@@ -308,7 +308,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
                   role="menuitem"
                 >
                   {copied ? (
-                    <>Copied!</>
+                    <>{t("List_Toolbox.copied")}</>
                   ) : (
                     <>
                       <Copy />
@@ -329,7 +329,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
-                    <DialogTitle className="text-lg font-medium">
+                    <DialogTitle className="text-lg font-medium text-center">
                       {t("List_Toolbox.qr_dialog")}
                     </DialogTitle>
                     <QRCode
