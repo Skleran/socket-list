@@ -98,6 +98,8 @@ export default function CollabsList({ listId }: Props) {
                           </Select>
                         </div>
                         <HoldToDeleteButton
+                          holdText={t("List_Toolbox.delete")}
+                          triggeredText={t("List_Toolbox.deleted")}
                           onHoldComplete={() => handleRemove(userId, _id)}
                         />
                       </div>

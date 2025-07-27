@@ -110,7 +110,7 @@ export default function ShoppingListDialog({ listId }: Props) {
                 name="item-quantity"
                 value={quantity}
                 type="number"
-                placeholder={t("ListItems.ph_shopping_quanitity")}
+                placeholder={t("ListItems.ph_shopping_quantity")}
                 onChange={(e) => setQuantity(e.target.valueAsNumber)}
                 required
               />

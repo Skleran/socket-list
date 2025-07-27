@@ -18,6 +18,7 @@ import { HoldToDeleteButton } from "./hold-to-delete-button";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -32,6 +33,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
   const deleteList = useMutation(api.lists.deleteList);
   const [shouldRender, setShouldRender] = useState(false);
   const [openedWithKeyboard, setOpenedWithKeyboard] = useState(false);
+  const t = useTranslations();
   // const [isListDeleted, setIsListDeleted] = useState(false);
 
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -310,7 +312,7 @@ export default function AnimatedListToolbox({ listId }: Props) {
                   ) : (
                     <>
                       <Copy />
-                      Copy List Link
+                      {t("List_Toolbox.copy")}
                     </>
                   )}
                 </Button>
@@ -323,12 +325,12 @@ export default function AnimatedListToolbox({ listId }: Props) {
                       role="menuitem"
                     >
                       <QrCode />
-                      Display QR Code
+                      {t("List_Toolbox.qr")}
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
                     <DialogTitle className="text-lg font-medium">
-                      Scan to Open List
+                      {t("List_Toolbox.qr_dialog")}
                     </DialogTitle>
                     <QRCode
                       value={`${window.location.origin}/${listId}`}
@@ -346,6 +348,8 @@ export default function AnimatedListToolbox({ listId }: Props) {
                     void deleteList({ listId });
                     setIsExpanded(false);
                   }}
+                  holdText={t("List_Toolbox.delete")}
+                  triggeredText={t("List_Toolbox.deleted")}
                   className="rounded-xl h-10 text-nowrap"
                   buttonClass="bg-destructive text-white hover:bg-destructive/90 dark:bg-destructive/60"
                   tabIndex={isExpanded ? 0 : -1}

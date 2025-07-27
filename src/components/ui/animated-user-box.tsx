@@ -317,7 +317,7 @@ export default function UserBox() {
                 </div>
 
                 <div className="w-full h-fit flex flex-col items-center gap-4 justify-between">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="w-full flex items-center justify-between">
                     <LocaleSelectBox />
                     <ChangeThemeTabs animationKey="change-theme" />
                   </div>

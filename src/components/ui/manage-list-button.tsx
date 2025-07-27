@@ -61,9 +61,9 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
           <MoreHorizontal className="size-5.5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-64">
+      <PopoverContent className="w-64 mr-2">
         <div className="grid gap-4">
-          <div className="space-y-2 flex items-center justify-between">
+          <div className=" flex items-center justify-between">
             <h4 className="leading-none font-medium">
               {t("Manage_List.settings_title")}
             </h4>

@@ -1,83 +1,94 @@
 {
   "LocaleSwitcher": {
-    "label": "Diller"
+    "label": "Dil"
   },
   "LandingPage": {
-    "hero_eyebrow": "paylaşılan listeler, basit hale getirildi",
+    "hero_eyebrow": "Paylaşımlı listeler, zahmetsizce.",
     "hero_header_top": "Listeler yalnız olmamalı.",
     "hero_header_bot": "Kendi listenizi anında paylaşın.",
-    "hero_subheader": "Bir liste oluşturun, bağlantısını gönderin.",
-    "hero_button": "ile giriş yap",
+    "hero_subheader": "Liste oluştur, bağlantıyı paylaş.",
+    "hero_button": "ile devam et",
     "hero_or": "veya"
   },
   "HomePage": {
-    "collab_lists": "Ortak Listeler"
+    "collab_lists": "Seninle Paylaşılanlar"
   },
   "ListCard": {
-    "empty_list": "Boş liste",
+    "empty_list": "Bu liste şu anda boş.",
     "items": "öğe"
   },
   "NewListDialog": {
-    "btn_trigger": "Yeni Liste Oluştur",
-    "title": "Liste Oluştur",
-    "description": "------",
+    "btn_trigger": "Yeni Liste",
+    "title": "Yeni Liste Oluştur",
+    "description": "Listeye bir ad, tür ve görünürlük belirle.",
     "lbl_title": "Başlık",
-    "ph_title": "Listenin başlığı",
-    "lbl_type": "Tür",
+    "ph_title": "Liste başlığını girin",
+    "lbl_type": "Liste Türü",
     "ph_type": "Liste türünü seçin",
-    "lbl_type_select": "Türler",
+    "lbl_type_select": "Liste Türü",
     "type_default": "Standart Liste",
-    "type_check": "Kontrol Listesi",
+    "type_check": "Yapılacaklar Listesi",
     "type_shopping": "Alışveriş Listesi",
     "lbl_visibility": "Görünürlük",
-    "ph_visibility": "Liste görünürlüğünü seçin",
+    "ph_visibility": "Kimler görebilir?",
     "lbl_visibility_select": "Görünürlük",
-    "visibility_private": "Özel",
+    "visibility_private": "Gizli",
     "visibility_public-read": "Herkese açık (salt okunur)",
     "visibility_public-edit": "Herkese açık (düzenlenebilir)",
     "btn_cancel": "İptal",
-    "btn_submit": "Liste Oluştur"
+    "btn_submit": "Oluştur"
   },
   "ListPage": {
-    "private_or_doesn't_exist": "Bu liste özel ya da mevcut değil."
+    "private_or_doesn't_exist": "Bu liste gizli veya artık mevcut değil."
   },
   "Manage_List": {
-    "settings_title": "Liste Ayarları",
-    "qr_dialog": "Listeyi açmak için tarayın",
+    "settings_title": "Listeyi Yönet",
+    "qr_dialog": "Bu listeyi açmak için tarat",
     "lbl_visibility": "Görünürlük",
     "ph_visibility": "Liste görünürlüğünü seçin",
     "lbl_visibility_select": "Görünürlük",
-    "visibility_private": "Özel",
+    "visibility_private": "Gizli",
     "visibility_public-read": "Herkese açık (salt okunur)",
     "visibility_public-edit": "Herkese açık (düzenlenebilir)",
     "collabs_title": "Katılımcılar"
   },
   "Collab_List": {
-    "collab_role": "Katılımcı rolü:",
-    "lbl_role_select": "Katılımcı rolünü güncelle",
+    "collab_role": "Rol:",
+    "lbl_role_select": "Rolü değiştir",
     "role_viewer": "Görüntüleyici",
     "role_editor": "Düzenleyici"
   },
   "ListItems": {
-    "no_item": "Hiç öğe yok",
+    "no_item": "Henüz hiç öğe yok",
     "new_item_trigger": "+ Yeni öğe ekle",
     "newItemDialog_title": "Yeni Öğe",
-    "newItemDialog_description": "------",
+    "newItemDialog_description": "Eklemek istediğiniz öğeyi yazın.",
     "lbl_content": "İçerik",
     "ph_content": "Öğe içeriği",
     "btn_cancel": "İptal",
-    "btn_submit": "Öğe ekle",
-    "lbl_shopping_item": "Öğe",
-    "ph_shopping_item_name": "Öğe adı",
+    "btn_submit": "Ekle",
+    "lbl_shopping_item": "Ürün",
+    "ph_shopping_item_name": "örn. Elma",
     "lbl_shopping_shop": "Mağaza",
-    "ph_shopping_shop_name": "Mağaza adı",
+    "ph_shopping_shop_name": "örn. Market",
     "lbl_shopping_quantity": "Miktar",
-    "ph_shopping_quanitity": "adet/kg"
+    "ph_shopping_quantity": "adet/kg"
   },
   "Navbar": {
     "lbl_layout_selector": "Görünüm:",
     "btn_grid": "Izgara",
     "btn_list": "Liste",
     "btn_sign-out": "Çıkış Yap"
+  },
+  "List_Toolbox": {
+    "copy": "Bağlantıyı Kopyala",
+    "qr": "QR Kodunu Göster",
+    "qr_dialog": "Bu listeyi açmak için tarat",
+    "delete": "Basılı tut ve sil",
+    "deleted": "Silindi"
+  },
+  "Login_Popover": {
+    "login": "Giriş Yap",
+    "btn": "ile devam et"
   }
 }

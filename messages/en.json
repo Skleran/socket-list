@@ -1,83 +1,94 @@
 {
   "LocaleSwitcher": {
-    "label": "Languages"
+    "label": "Language"
   },
   "LandingPage": {
-    "hero_eyebrow": "shared lists, made simple",
-    "hero_header_top": "Lists shouldn’t be lonely.",
+    "hero_eyebrow": "Shared lists, made simple",
+    "hero_header_top": "Lists don't have to be lonely.",
     "hero_header_bot": "Share yours with anyone instantly.",
     "hero_subheader": "Make a list, send the link.",
-    "hero_button": "login with",
+    "hero_button": "Continue with",
     "hero_or": "or"
   },
   "HomePage": {
-    "collab_lists": "Collaborated Lists"
+    "collab_lists": "Shared With You"
   },
   "ListCard": {
-    "empty_list": "Empty list",
+    "empty_list": "This list is empty.",
     "items": "items"
   },
   "NewListDialog": {
-    "btn_trigger": "Create New List",
-    "title": "Create List",
-    "description": "------",
+    "btn_trigger": "New List",
+    "title": "Create a New List",
+    "description": "Give your list a name, type, and choose who can see it.",
     "lbl_title": "Title",
-    "ph_title": "Title of the list",
-    "lbl_type": "Type",
-    "ph_type": "Select list type",
-    "lbl_type_select": "Types",
+    "ph_title": "Enter list title",
+    "lbl_type": "List Type",
+    "ph_type": "Choose list type",
+    "lbl_type_select": "List Type",
     "type_default": "Standard List",
-    "type_check": "Check List",
+    "type_check": "Checklist",
     "type_shopping": "Shopping List",
     "lbl_visibility": "Visibilitiy",
-    "ph_visibility": "Select list visibility",
+    "ph_visibility": "Choose who can access",
     "lbl_visibility_select": "Visibilitiy",
     "visibility_private": "Private",
-    "visibility_public-read": "Public read-only",
-    "visibility_public-edit": "Public edit",
+    "visibility_public-read": "Public (View Only)",
+    "visibility_public-edit": "Public (Editable)",
     "btn_cancel": "Cancel",
-    "btn_submit": "Create List"
+    "btn_submit": "Create"
   },
   "ListPage": {
-    "private_or_doesn't_exist": "This list is private or doesn't exist."
+    "private_or_doesn't_exist": "This list is private or no longer exists."
   },
   "Manage_List": {
-    "settings_title": "List Settings",
-    "qr_dialog": "Scan to open list",
+    "settings_title": "Manage List",
+    "qr_dialog": "Scan to open this list",
     "lbl_visibility": "Visibilitiy",
-    "ph_visibility": "Select list visibility",
-    "lbl_visibility_select": "Visibilitiy",
+    "ph_visibility": "Choose visibility",
+    "lbl_visibility_select": "Visibility",
     "visibility_private": "Private",
-    "visibility_public-read": "Public read-only",
-    "visibility_public-edit": "Public edit",
+    "visibility_public-read": "Public (View Only)",
+    "visibility_public-edit": "Public (Editable)",
     "collabs_title": "Collaborators"
   },
   "Collab_List": {
-    "collab_role": "Collab role:",
-    "lbl_role_select": "Update collaborator role",
+    "collab_role": "Role:",
+    "lbl_role_select": "Change collaborator role",
     "role_viewer": "Viewer",
     "role_editor": "Editor"
   },
   "ListItems": {
-    "no_item": "No item",
-    "new_item_trigger": "+ Add new item",
+    "no_item": "No items yet",
+    "new_item_trigger": "+ Add item",
     "newItemDialog_title": "New Item",
-    "newItemDialog_description": "------",
-    "lbl_content": "Content",
-    "ph_content": "Item content",
+    "newItemDialog_description": "Enter the item details below.",
+    "lbl_content": "Item",
+    "ph_content": "Content",
     "btn_cancel": "Cancel",
-    "btn_submit": "Add item",
+    "btn_submit": "Add",
     "lbl_shopping_item": "Item",
-    "ph_shopping_item_name": "Item name",
+    "ph_shopping_item_name": "e.g. Apples",
     "lbl_shopping_shop": "Shop",
-    "ph_shopping_shop_name": "Shop name",
+    "ph_shopping_shop_name": "e.g. Grocery Store",
     "lbl_shopping_quantity": "Quantity",
-    "ph_shopping_quanitity": "pcs/kg"
+    "ph_shopping_quantity": "pcs/kg"
   },
   "Navbar": {
-    "lbl_layout_selector": "Layout:",
+    "lbl_layout_selector": "View:",
     "btn_grid": "Grid",
     "btn_list": "List",
     "btn_sign-out": "Sign Out"
+  },
+  "List_Toolbox": {
+    "copy": "Copy Link",
+    "qr": "Show QR Code",
+    "qr_dialog": "Scan to open list",
+    "delete": "Hold to Delete",
+    "deleted": "Deleted"
+  },
+  "Login_Popover": {
+    "login": "Log in",
+    "btn": "Continue with"
   }
 }

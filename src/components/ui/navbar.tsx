@@ -5,6 +5,12 @@ import ChangeThemeTabs from "./theme-selector";
 import UserBox from "./animated-user-box";
 import LoginPopover from "./login-popover";
 import LocaleSelectBox from "./locale-select-box";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Settings2 } from "lucide-react";
 
 export default async function Navbar() {
   return (
@@ -18,10 +24,21 @@ export default async function Navbar() {
         {(await isAuthenticatedNextjs()) ? (
           <UserBox />
         ) : (
-          <div className="flex items-center gap-2">
-            <ChangeThemeTabs animationKey="theme" key={"theme"} />
+          <div className="flex items-center gap-3">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant={"ghost"} size={"icon"}>
+                  <Settings2 />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto flex flex-col gap-3 p-2">
+                {" "}
+                <ChangeThemeTabs animationKey="theme" key={"theme"} />
+                <LocaleSelectBox />
+              </PopoverContent>
+            </Popover>
+
             <LoginPopover />
-            <LocaleSelectBox />
           </div>
         )}
       </div>
