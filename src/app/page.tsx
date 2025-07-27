@@ -9,6 +9,7 @@ import HomeCollaboratedListCardList from "@/components/ui/home-collaborated-list
 import HomeCollaboratedListCardGrid from "@/components/ui/home-collaborated-list-card-grid";
 import { useLayoutContext } from "@/components/ui/layout-context";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export type ListType = "DEFAULT" | "CHECK" | "SHOPPING";
 export type Visibility = "private" | "public-read" | "public-edit";
@@ -20,6 +21,7 @@ export default function Lists() {
 
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [previousLayoutMode, setPreviousLayoutMode] = useState(layoutMode);
+  const t = useTranslations();
 
   useEffect(() => {
     if (previousLayoutMode !== layoutMode) {
@@ -165,7 +167,7 @@ export default function Lists() {
             // variants={cardVariants}
             layout
           >
-            collaborated lists
+            {t("HomePage.collab_lists")}
           </motion.h4>
 
           <AnimatePresence mode="wait">

@@ -1,0 +1,83 @@
+{
+  "LocaleSwitcher": {
+    "label": "Diller"
+  },
+  "LandingPage": {
+    "hero_eyebrow": "paylaşılan listeler, basit hale getirildi",
+    "hero_header_top": "Listeler yalnız olmamalı.",
+    "hero_header_bot": "Kendi listenizi anında paylaşın.",
+    "hero_subheader": "Bir liste oluşturun, bağlantısını gönderin.",
+    "hero_button": "ile giriş yap",
+    "hero_or": "veya"
+  },
+  "HomePage": {
+    "collab_lists": "Ortak Listeler"
+  },
+  "ListCard": {
+    "empty_list": "Boş liste",
+    "items": "öğe"
+  },
+  "NewListDialog": {
+    "btn_trigger": "Yeni Liste Oluştur",
+    "title": "Liste Oluştur",
+    "description": "------",
+    "lbl_title": "Başlık",
+    "ph_title": "Listenin başlığı",
+    "lbl_type": "Tür",
+    "ph_type": "Liste türünü seçin",
+    "lbl_type_select": "Türler",
+    "type_default": "Standart Liste",
+    "type_check": "Kontrol Listesi",
+    "type_shopping": "Alışveriş Listesi",
+    "lbl_visibility": "Görünürlük",
+    "ph_visibility": "Liste görünürlüğünü seçin",
+    "lbl_visibility_select": "Görünürlük",
+    "visibility_private": "Özel",
+    "visibility_public-read": "Herkese açık (salt okunur)",
+    "visibility_public-edit": "Herkese açık (düzenlenebilir)",
+    "btn_cancel": "İptal",
+    "btn_submit": "Liste Oluştur"
+  },
+  "ListPage": {
+    "private_or_doesn't_exist": "Bu liste özel ya da mevcut değil."
+  },
+  "Manage_List": {
+    "settings_title": "Liste Ayarları",
+    "qr_dialog": "Listeyi açmak için tarayın",
+    "lbl_visibility": "Görünürlük",
+    "ph_visibility": "Liste görünürlüğünü seçin",
+    "lbl_visibility_select": "Görünürlük",
+    "visibility_private": "Özel",
+    "visibility_public-read": "Herkese açık (salt okunur)",
+    "visibility_public-edit": "Herkese açık (düzenlenebilir)",
+    "collabs_title": "Katılımcılar"
+  },
+  "Collab_List": {
+    "collab_role": "Katılımcı rolü:",
+    "lbl_role_select": "Katılımcı rolünü güncelle",
+    "role_viewer": "Görüntüleyici",
+    "role_editor": "Düzenleyici"
+  },
+  "ListItems": {
+    "no_item": "Hiç öğe yok",
+    "new_item_trigger": "+ Yeni öğe ekle",
+    "newItemDialog_title": "Yeni Öğe",
+    "newItemDialog_description": "------",
+    "lbl_content": "İçerik",
+    "ph_content": "Öğe içeriği",
+    "btn_cancel": "İptal",
+    "btn_submit": "Öğe ekle",
+    "lbl_shopping_item": "Öğe",
+    "ph_shopping_item_name": "Öğe adı",
+    "lbl_shopping_shop": "Mağaza",
+    "ph_shopping_shop_name": "Mağaza adı",
+    "lbl_shopping_quantity": "Miktar",
+    "ph_shopping_quanitity": "adet/kg"
+  },
+  "Navbar": {
+    "lbl_layout_selector": "Görünüm:",
+    "btn_grid": "Izgara",
+    "btn_list": "Liste",
+    "btn_sign-out": "Çıkış Yap"
+  }
+}

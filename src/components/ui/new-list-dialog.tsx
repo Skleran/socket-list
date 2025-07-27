@@ -29,6 +29,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { ListType, Visibility } from "@/app/page";
 import { useLayoutContext } from "./layout-context";
+import { useTranslations } from "next-intl";
 
 export default function NewListDialog() {
   const [title, setTitle] = useState("");
@@ -36,6 +37,7 @@ export default function NewListDialog() {
   const [visibility, setVisibility] = useState<Visibility | "">("");
   const [open, setOpen] = useState(false);
   const createList = useMutation(api.lists.createList);
+  const t = useTranslations();
 
   const selectTriggerRef = useRef<HTMLButtonElement>(null);
 
@@ -73,12 +75,14 @@ export default function NewListDialog() {
             <Card className="aspect-square grid grid-rows-3 gap-0 hover:cursor-pointer">
               <div></div>
               <Plus className="m-auto size-10" />
-              <p className="mx-auto text-sm">create new list</p>
+              <p className="mx-auto text-sm">
+                {t("NewListDialog.btn_trigger")}
+              </p>
             </Card>
           ) : (
             <Card className="grid grid-cols-[auto_auto_auto] justify-center items-center gap-4 hover:cursor-pointer h-24">
               <Plus className="size-6" />
-              <p className="text-base">create new list</p>
+              <p className="text-base">{t("NewListDialog.btn_trigger")}</p>
               <div></div>
             </Card>
           )}
@@ -86,16 +90,18 @@ export default function NewListDialog() {
         <DialogContent className="sm:max-w-[425px]">
           <form onSubmit={handleSubmit} className="grid gap-4">
             <DialogHeader>
-              <DialogTitle>create list</DialogTitle>
-              <DialogDescription>-------</DialogDescription>
+              <DialogTitle>{t("NewListDialog.title")}</DialogTitle>
+              <DialogDescription>
+                {t("NewListDialog.description")}
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">
               <div className="grid gap-3">
-                <Label htmlFor="title">title</Label>
+                <Label htmlFor="title">{t("NewListDialog.lbl_title")}</Label>
                 <Input
                   id="title"
                   name="title"
-                  placeholder="Title of the list"
+                  placeholder={t("NewListDialog.ph_title")}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   onKeyDown={(e) => {
@@ -108,43 +114,61 @@ export default function NewListDialog() {
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="type">type</Label>
+                <Label htmlFor="type">{t("NewListDialog.lbl_type")}</Label>
                 <Select
                   value={type}
                   onValueChange={(value) => setType(value as ListType)}
                   required
                 >
                   <SelectTrigger ref={selectTriggerRef} className="w-fit">
-                    <SelectValue placeholder="Select list type" />
+                    <SelectValue placeholder={t("NewListDialog.ph_type")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>types</SelectLabel>
-                      <SelectItem value="DEFAULT">standard list</SelectItem>
-                      <SelectItem value="CHECK">check list</SelectItem>
-                      <SelectItem value="SHOPPING">shopping list</SelectItem>
+                      <SelectLabel>
+                        {t("NewListDialog.lbl_type_select")}
+                      </SelectLabel>
+                      <SelectItem value="DEFAULT">
+                        {t("NewListDialog.type_default")}
+                      </SelectItem>
+                      <SelectItem value="CHECK">
+                        {t("NewListDialog.type_check")}
+                      </SelectItem>
+                      <SelectItem value="SHOPPING">
+                        {t("NewListDialog.type_shopping")}
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="visibility">visibility</Label>
+                <Label htmlFor="visibility">
+                  {t("NewListDialog.lbl_visibility")}
+                </Label>
                 <Select
                   value={visibility}
                   onValueChange={(value) => setVisibility(value as Visibility)}
                   required
                 >
                   <SelectTrigger ref={selectTriggerRef} className="w-fit">
-                    <SelectValue placeholder="Select list visibility" />
+                    <SelectValue
+                      placeholder={t("NewListDialog.ph_visibility")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>visibility</SelectLabel>
-                      <SelectItem value="private">private</SelectItem>
-                      <SelectItem value="public-read">
-                        public read-only
+                      <SelectLabel>
+                        {t("NewListDialog.lbl_visibility_select")}
+                      </SelectLabel>
+                      <SelectItem value="private">
+                        {t("NewListDialog.visibility_private")}
                       </SelectItem>
-                      <SelectItem value="public-edit">public edit</SelectItem>
+                      <SelectItem value="public-read">
+                        {t("NewListDialog.visibility_public-read")}
+                      </SelectItem>
+                      <SelectItem value="public-edit">
+                        {t("NewListDialog.visibility_public-edit")}
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -152,9 +176,11 @@ export default function NewListDialog() {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">cancel</Button>
+                <Button variant="outline">
+                  {t("NewListDialog.btn_cancel")}
+                </Button>
               </DialogClose>
-              <Button type="submit">create list</Button>
+              <Button type="submit">{t("NewListDialog.btn_submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

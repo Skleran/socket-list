@@ -8,6 +8,7 @@ import Link from "next/link";
 import { CheckSquare, ShoppingCart, List } from "lucide-react";
 import { motion } from "framer-motion";
 import LeaveCollaboratedListButton from "./leave-collaborated-list-button";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -21,6 +22,7 @@ export default function HomeCollaboratedListCardGrid({
   type,
 }: Props) {
   const items = useQuery(api.listItems.getPreviewItems, { listId });
+  const t = useTranslations();
 
   const typeIconMap: Record<ListType, React.ReactNode> = {
     DEFAULT: <List className="w-4 h-4 text-muted-foreground flex-none" />,
@@ -55,7 +57,9 @@ export default function HomeCollaboratedListCardGrid({
                 </li>
               ))}
               {items && items.length === 0 && (
-                <li className="text-muted-foreground italic">empty list</li>
+                <li className="text-muted-foreground italic">
+                  {t("ListCard.empty_list")}
+                </li>
               )}
             </ul>
           </div>

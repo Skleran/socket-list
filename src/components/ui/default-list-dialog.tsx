@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -26,6 +27,7 @@ export default function DefaultListDialog({ listId }: Props) {
   const createItem = useMutation(api.listItems.createDefaultListItem);
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const t = useTranslations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,22 +52,24 @@ export default function DefaultListDialog({ listId }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">+ add new item</Button>
+        <Button className="w-full">{t("ListItems.new_item_trigger")}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit} className="grid gap-4">
           <DialogHeader>
-            <DialogTitle>new item</DialogTitle>
-            <DialogDescription>-------</DialogDescription>
+            <DialogTitle>{t("ListItems.newItemDialog_title")}</DialogTitle>
+            <DialogDescription>
+              {t("ListItems.newItemDialog_description")}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="content">content</Label>
+              <Label htmlFor="content">{t("ListItems.lbl_content")}</Label>
               <Input
                 id="content"
                 name="item-content"
                 value={content}
-                placeholder="list item"
+                placeholder={t("ListItems.ph_content")}
                 onChange={(e) => setContent(e.target.value)}
                 required
               />
@@ -73,9 +77,9 @@ export default function DefaultListDialog({ listId }: Props) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">cancel</Button>
+              <Button variant="outline">{t("ListItems.btn_cancel")}</Button>
             </DialogClose>
-            <Button type="submit">add item</Button>
+            <Button type="submit">{t("ListItems.btn_submit")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

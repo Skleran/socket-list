@@ -4,6 +4,7 @@ import { isAuthenticatedNextjs } from "@convex-dev/auth/nextjs/server";
 import ChangeThemeTabs from "./theme-selector";
 import UserBox from "./animated-user-box";
 import LoginPopover from "./login-popover";
+import LocaleSelectBox from "./locale-select-box";
 
 export default async function Navbar() {
   return (
@@ -20,6 +21,7 @@ export default async function Navbar() {
           <div className="flex items-center gap-2">
             <ChangeThemeTabs animationKey="theme" key={"theme"} />
             <LoginPopover />
+            <LocaleSelectBox />
           </div>
         )}
       </div>

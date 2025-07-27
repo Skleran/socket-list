@@ -13,6 +13,7 @@ import ShoppingList from "@/components/ui/shopping-list";
 import EditableListTitle from "@/components/ui/editable-list-title";
 import ManageListButton from "@/components/ui/manage-list-button";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useTranslations } from "next-intl";
 
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
@@ -23,6 +24,7 @@ export default function ListPage() {
   const updateListTitle = useMutation(api.lists.updateListTitle);
   const addCollab = useMutation(api.collaborators.addCollaborator);
   const isCreator = user && list?.userId === user._id;
+  const t = useTranslations();
 
   useEffect(() => {
     if (
@@ -43,7 +45,7 @@ export default function ListPage() {
   }, [list]);
 
   if (list === null) {
-    return <p>this list is private or doesn&apos;t exist</p>;
+    return <p>{t("ListPage.private_or_doesn't_exist")}</p>;
   }
 
   if (!list) {

@@ -12,6 +12,8 @@ import { api } from "../../../convex/_generated/api";
 import Image from "next/image";
 import type { Transition } from "framer-motion";
 import ListLayoutSelector from "./list-layout-selector";
+import { useTranslations } from "next-intl";
+import LocaleSelectBox from "./locale-select-box";
 
 export default function UserBox() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -19,6 +21,7 @@ export default function UserBox() {
   const [openedWithKeyboard, setOpenedWithKeyboard] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [toolboxPosition, setToolboxPosition] = useState({ top: 0, left: 0 });
+  const t = useTranslations();
 
   const iconRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -29,7 +32,6 @@ export default function UserBox() {
 
   useEffect(() => setHasMounted(true), []);
 
-  // Focus management when opening
   useEffect(() => {
     if (isExpanded && openedWithKeyboard) {
       setTimeout(() => {
@@ -38,7 +40,6 @@ export default function UserBox() {
     }
   }, [isExpanded, openedWithKeyboard]);
 
-  // Trap focus in the box
   useEffect(() => {
     if (!isExpanded) return;
 
@@ -50,7 +51,6 @@ export default function UserBox() {
       }
 
       if (e.key === "Tab") {
-        // Get all focusable elements inside the expanded box
         const focusableElements = Array.from(
           containerRef.current?.querySelectorAll(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -312,12 +312,16 @@ export default function UserBox() {
                   <p className="text-sm leading-4">{user?.name}</p>
                 </div>
                 <div className="flex gap-3 items-center text-center">
-                  <p className="leading-0">Layout:</p>
+                  <p className="leading-0">{t("Navbar.lbl_layout_selector")}</p>
                   <ListLayoutSelector />
                 </div>
 
                 <div className="w-full h-fit flex flex-col items-center gap-4 justify-between">
-                  <ChangeThemeTabs animationKey="change-theme" />
+                  <div className="flex items-center justify-between gap-4">
+                    <LocaleSelectBox />
+                    <ChangeThemeTabs animationKey="change-theme" />
+                  </div>
+
                   <SignOut />
                 </div>
               </motion.div>

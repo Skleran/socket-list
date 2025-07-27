@@ -9,6 +9,7 @@ import { CheckSquare, ShoppingCart, List } from "lucide-react";
 // import DeleteListButton from "./delete-list-button";
 import AnimatedListToolbox from "./animated-list-toolbox";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -18,6 +19,7 @@ type Props = {
 
 export default function HomeListCardGrid({ listId, title, type }: Props) {
   const items = useQuery(api.listItems.getPreviewItems, { listId });
+  const t = useTranslations();
 
   const typeIconMap: Record<ListType, React.ReactNode> = {
     DEFAULT: <List className="w-4 h-4 text-muted-foreground flex-none" />,
@@ -36,7 +38,10 @@ export default function HomeListCardGrid({ listId, title, type }: Props) {
           role="link"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
+            if (
+              (e.key === "Enter" || e.key === " ") &&
+              e.target === e.currentTarget // this fixes the issue of accessing inner buttons with keyboard
+            ) {
               e.preventDefault();
               router.push(`/${listId}`);
             }
@@ -68,7 +73,9 @@ export default function HomeListCardGrid({ listId, title, type }: Props) {
                   </li>
                 ))}
                 {items && items.length === 0 && (
-                  <li className="text-muted-foreground italic">empty list</li>
+                  <li className="text-muted-foreground italic">
+                    {t("ListCard.empty_list")}
+                  </li>
                 )}
               </ul>
             </div>

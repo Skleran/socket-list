@@ -5,6 +5,7 @@ import ChecklistDialog from "./checklist-dialog";
 import EditableChecklistItem from "./editable-checklist-item";
 import { useListPermissions } from "@/hooks/useListPermission";
 import { Checkbox } from "./checkbox";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -13,6 +14,7 @@ type Props = {
 export default function Checklist({ listId }: Props) {
   const listItems = useQuery(api.listItems.getListItems, { listId });
   const { canEdit } = useListPermissions(listId);
+  const t = useTranslations();
 
   return (
     <div className="w-full">
@@ -20,7 +22,7 @@ export default function Checklist({ listId }: Props) {
         <p className="animate-spin w-fit">|</p>
       ) : listItems.length === 0 ? (
         <div className="flex flex-col gap-3">
-          <p className="text-muted-foreground">no items</p>
+          <p className="text-muted-foreground">{t("ListItems.no_item")}</p>
           {canEdit && <ChecklistDialog listId={listId} />}
         </div>
       ) : (

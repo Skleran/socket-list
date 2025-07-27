@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Plus } from "lucide-react";
 
 type Props = {
   listId: Id<"lists">;
@@ -28,6 +30,7 @@ export default function ShoppingListDialog({ listId }: Props) {
   const [content, setContent] = useState("");
   const [quantity, setQuantity] = useState<number | "">("");
   const [shopName, setShopName] = useState("");
+  const t = useTranslations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,45 +65,53 @@ export default function ShoppingListDialog({ listId }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">+ add new item</Button>
+        <Button className="w-full">{t("ListItems.new_item_trigger")}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit} className="grid gap-4">
           <DialogHeader>
-            <DialogTitle>new item</DialogTitle>
-            <DialogDescription>-------</DialogDescription>
+            <DialogTitle>{t("ListItems.newItemDialog_title")}</DialogTitle>
+            <DialogDescription>
+              {t("ListItems.newItemDialog_description")}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="content">item</Label>
+              <Label htmlFor="content">
+                {t("ListItems.lbl_shopping_item")}
+              </Label>
               <Input
                 id="content"
                 name="item-content"
                 value={content}
-                placeholder="item name"
+                placeholder={t("ListItems.ph_shopping_item_name")}
                 onChange={(e) => setContent(e.target.value)}
                 required
               />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="shopName">shop</Label>
+              <Label htmlFor="shopName">
+                {t("ListItems.lbl_shopping_shop")}
+              </Label>
               <Input
                 id="shopName"
                 name="item-shopName"
                 value={shopName}
-                placeholder="shop name"
+                placeholder={t("ListItems.ph_shopping_shop_name")}
                 onChange={(e) => setShopName(e.target.value)}
                 required
               />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="quantity">quantity</Label>
+              <Label htmlFor="quantity">
+                {t("ListItems.lbl_shopping_quantity")}
+              </Label>
               <Input
                 id="quantity"
                 name="item-quantity"
                 value={quantity}
                 type="number"
-                placeholder="pcs/kg"
+                placeholder={t("ListItems.ph_shopping_quanitity")}
                 onChange={(e) => setQuantity(e.target.valueAsNumber)}
                 required
               />
@@ -108,9 +119,9 @@ export default function ShoppingListDialog({ listId }: Props) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">cancel</Button>
+              <Button variant="outline">{t("ListItems.btn_cancel")}</Button>
             </DialogClose>
-            <Button type="submit">add item</Button>
+            <Button type="submit">{t("ListItems.btn_submit")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

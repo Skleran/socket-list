@@ -19,6 +19,7 @@ import { Separator } from "./separator";
 // import { Button } from "./button";
 import AnimatedListToolbox from "./animated-list-toolbox";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -28,6 +29,7 @@ type Props = {
 
 export default function HomeListCardList({ listId, title, type }: Props) {
   const items = useQuery(api.listItems.getNumberOfItems, { listId });
+  const t = useTranslations();
 
   const typeIconMap: Record<ListType, React.ReactNode> = {
     DEFAULT: <List className="size-5 text-muted-foreground flex-none" />,
@@ -46,7 +48,10 @@ export default function HomeListCardList({ listId, title, type }: Props) {
         role="link"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
+          if (
+            (e.key === "Enter" || e.key === " ") &&
+            e.target === e.currentTarget // this fixes the issue of accessing inner buttons with keyboard
+          ) {
             e.preventDefault();
             router.push(`/${listId}`);
           }
@@ -68,7 +73,13 @@ export default function HomeListCardList({ listId, title, type }: Props) {
               {typeIconMap[type]}
               {/* <Dot className="" /> */}
               <Separator orientation="vertical" />
-              {items === 0 ? <p>empty list</p> : <p>{items} items</p>}
+              {items === 0 ? (
+                <p>{t("ListCard.empty_list")}</p>
+              ) : (
+                <p>
+                  {items} {t("ListCard.items")}
+                </p>
+              )}
             </div>
           </div>
 

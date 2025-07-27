@@ -18,6 +18,7 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { MoreHorizontal } from "lucide-react";
 import { HoldToDeleteButton } from "./hold-to-delete-button";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 type Props = {
   listId: Id<"lists">;
@@ -25,6 +26,7 @@ type Props = {
 
 export default function CollabsList({ listId }: Props) {
   const collabs = useQuery(api.collaborators.getCollaborators, { listId });
+  const t = useTranslations();
 
   const updateRole = useMutation(api.collaborators.updateCollabRole);
   const removeCollaborator = useMutation(api.collaborators.removeCollaborator);
@@ -67,7 +69,9 @@ export default function CollabsList({ listId }: Props) {
                     <PopoverContent className="w-60">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center justify-between">
-                          <p className="text-sm">collab role:</p>
+                          <p className="text-sm">
+                            {t("Collab_List.collab_role")}
+                          </p>
                           <Select
                             value={role}
                             onValueChange={(value) => {
@@ -81,10 +85,14 @@ export default function CollabsList({ listId }: Props) {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>
-                                  update collaborator role
+                                  {t("Collab_List.lbl_role_select")}
                                 </SelectLabel>
-                                <SelectItem value="viewer">Viewer</SelectItem>
-                                <SelectItem value="editor">Editor</SelectItem>
+                                <SelectItem value="viewer">
+                                  {t("Collab_List.role_viewer")}
+                                </SelectItem>
+                                <SelectItem value="editor">
+                                  {t("Collab_List.role_editor")}
+                                </SelectItem>
                               </SelectGroup>
                             </SelectContent>
                           </Select>

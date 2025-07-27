@@ -16,6 +16,7 @@ import { Id } from "../../../convex/_generated/dataModel";
 import CollabsList from "./collabs-list";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./dialog";
 import QRCode from "react-qr-code";
+import { useTranslations } from "next-intl";
 
 type Props = {
   currentVisibility: Visibility;
@@ -27,6 +28,7 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
     currentVisibility as Visibility
   );
   const [copied, setCopied] = useState(false);
+  const t = useTranslations();
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/${listId}`;
@@ -62,7 +64,9 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
       <PopoverContent className="w-64">
         <div className="grid gap-4">
           <div className="space-y-2 flex items-center justify-between">
-            <h4 className="leading-none font-medium">List Settings</h4>
+            <h4 className="leading-none font-medium">
+              {t("Manage_List.settings_title")}
+            </h4>
             <div className="grid grid-cols-2 gap-1">
               <Button
                 onClick={handleCopy}
@@ -87,7 +91,7 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
                 </DialogTrigger>
                 <DialogContent className="flex flex-col items-center justify-center gap-4 w-fit">
                   <DialogTitle className="text-lg font-medium">
-                    Scan to Open List
+                    {t("Manage_List.qr_dialog")}
                   </DialogTitle>
                   <QRCode
                     value={`${window.location.origin}/${listId}`}
@@ -119,17 +123,27 @@ export default function ManageListButton({ currentVisibility, listId }: Props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Select List Visibility</SelectLabel>
-                  <SelectItem value="private">Private</SelectItem>
-                  <SelectItem value="public-read">Public Read-only</SelectItem>
-                  <SelectItem value="public-edit">Public Edit</SelectItem>
+                  <SelectLabel>
+                    {t("Manage_List.lbl_visibility_select")}
+                  </SelectLabel>
+                  <SelectItem value="private">
+                    {t("Manage_List.visibility_private")}
+                  </SelectItem>
+                  <SelectItem value="public-read">
+                    {t("Manage_List.visibility_public-read")}
+                  </SelectItem>
+                  <SelectItem value="public-edit">
+                    {t("Manage_List.visibility_public-edit")}
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
           <div className="border-b-1 my-1" />
           <div className="space-y-2">
-            <h4 className="leading-none font-medium">Collaborators</h4>
+            <h4 className="leading-none font-medium">
+              {t("Manage_List.collabs_title")}
+            </h4>
           </div>
           <CollabsList listId={listId} />
         </div>

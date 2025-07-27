@@ -1,0 +1,83 @@
+{
+  "LocaleSwitcher": {
+    "label": "Languages"
+  },
+  "LandingPage": {
+    "hero_eyebrow": "shared lists, made simple",
+    "hero_header_top": "Lists shouldn’t be lonely.",
+    "hero_header_bot": "Share yours with anyone instantly.",
+    "hero_subheader": "Make a list, send the link.",
+    "hero_button": "login with",
+    "hero_or": "or"
+  },
+  "HomePage": {
+    "collab_lists": "Collaborated Lists"
+  },
+  "ListCard": {
+    "empty_list": "Empty list",
+    "items": "items"
+  },
+  "NewListDialog": {
+    "btn_trigger": "Create New List",
+    "title": "Create List",
+    "description": "------",
+    "lbl_title": "Title",
+    "ph_title": "Title of the list",
+    "lbl_type": "Type",
+    "ph_type": "Select list type",
+    "lbl_type_select": "Types",
+    "type_default": "Standard List",
+    "type_check": "Check List",
+    "type_shopping": "Shopping List",
+    "lbl_visibility": "Visibilitiy",
+    "ph_visibility": "Select list visibility",
+    "lbl_visibility_select": "Visibilitiy",
+    "visibility_private": "Private",
+    "visibility_public-read": "Public read-only",
+    "visibility_public-edit": "Public edit",
+    "btn_cancel": "Cancel",
+    "btn_submit": "Create List"
+  },
+  "ListPage": {
+    "private_or_doesn't_exist": "This list is private or doesn't exist."
+  },
+  "Manage_List": {
+    "settings_title": "List Settings",
+    "qr_dialog": "Scan to open list",
+    "lbl_visibility": "Visibilitiy",
+    "ph_visibility": "Select list visibility",
+    "lbl_visibility_select": "Visibilitiy",
+    "visibility_private": "Private",
+    "visibility_public-read": "Public read-only",
+    "visibility_public-edit": "Public edit",
+    "collabs_title": "Collaborators"
+  },
+  "Collab_List": {
+    "collab_role": "Collab role:",
+    "lbl_role_select": "Update collaborator role",
+    "role_viewer": "Viewer",
+    "role_editor": "Editor"
+  },
+  "ListItems": {
+    "no_item": "No item",
+    "new_item_trigger": "+ Add new item",
+    "newItemDialog_title": "New Item",
+    "newItemDialog_description": "------",
+    "lbl_content": "Content",
+    "ph_content": "Item content",
+    "btn_cancel": "Cancel",
+    "btn_submit": "Add item",
+    "lbl_shopping_item": "Item",
+    "ph_shopping_item_name": "Item name",
+    "lbl_shopping_shop": "Shop",
+    "ph_shopping_shop_name": "Shop name",
+    "lbl_shopping_quantity": "Quantity",
+    "ph_shopping_quanitity": "pcs/kg"
+  },
+  "Navbar": {
+    "lbl_layout_selector": "Layout:",
+    "btn_grid": "Grid",
+    "btn_list": "List",
+    "btn_sign-out": "Sign Out"
+  }
+}

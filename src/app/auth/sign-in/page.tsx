@@ -5,11 +5,14 @@ import { useState } from "react";
 import { AnimatePresence, easeOut, motion } from "motion/react";
 import HeroImages from "@/components/ui/hero-images";
 import BackgroundGradient from "@/components/ui/bg-gradient";
+import { useTranslations } from "next-intl";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
   const [isLoadingGitHub, setIsLoadingGitHub] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+
+  const t = useTranslations();
 
   const animationVariants = {
     hidden: {},
@@ -51,23 +54,25 @@ export default function SignIn() {
           className="bg-accent-foreground text-accent py-1.5 px-3 rounded-4xl hover:bg-background hover:shadow-xl hover:shadow-accent-foreground/20 dark:hover:shadow-accent-foreground/15 hover:text-accent-foreground transition-all duration-400"
         >
           {/* <p className="">one list, everyone&#8217;s updates</p> */}
-          <p className="">shared lists, made simple</p>
+          <p className="">{t("LandingPage.hero_eyebrow")}</p>
         </motion.div>
         <div className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 mb-2 sm:mb-3 sm:text-5xl">
           <h1 className="">
-            {"Lists shouldn’t be lonely.".split(" ").map((word, idx, arr) => (
-              <motion.span
-                key={idx}
-                variants={childVariants}
-                className="inline-block hover:font-extrabold transition-all duration-300"
-              >
-                {word}
-                {idx < arr.length - 1 ? "\u00A0" : ""}
-              </motion.span>
-            ))}
+            {t("LandingPage.hero_header_top")
+              .split(" ")
+              .map((word, idx, arr) => (
+                <motion.span
+                  key={idx}
+                  variants={childVariants}
+                  className="inline-block hover:font-extrabold transition-all duration-300"
+                >
+                  {word}
+                  {idx < arr.length - 1 ? "\u00A0" : ""}
+                </motion.span>
+              ))}
           </h1>
           <h1 className="">
-            {"Share yours with anyone instantly."
+            {t("LandingPage.hero_header_bot")
               .split(" ")
               .map((word, idx, arr) => (
                 <motion.span
@@ -88,7 +93,7 @@ export default function SignIn() {
             variants={childVariants}
             className="text-muted-foreground"
           >
-            Make a list, send the link.
+            {t("LandingPage.hero_subheader")}
           </motion.p>
           <div className="w-full flex justify-center items-center flex-col sm:flex-row gap-3">
             <motion.div
@@ -116,7 +121,7 @@ export default function SignIn() {
                   </div>
 
                   <p className="flex gap-1 items-center">
-                    login with{" "}
+                    {t("LandingPage.hero_button")}{" "}
                     <svg
                       width="1024"
                       height="1024"
@@ -143,7 +148,7 @@ export default function SignIn() {
               variants={childVariants}
               className="hidden sm:inline"
             >
-              or
+              {t("LandingPage.hero_or")}
             </motion.p>
 
             <motion.div
@@ -172,7 +177,7 @@ export default function SignIn() {
                   </div>
 
                   <p className="flex gap-1 items-center">
-                    login with{" "}
+                    {t("LandingPage.hero_button")}{" "}
                     <svg
                       width="256"
                       height="262"
