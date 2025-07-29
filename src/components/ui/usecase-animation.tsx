@@ -133,7 +133,7 @@ export default function UsecaseAnimation() {
   const [hoverAnimationComplete, setHoverAnimationComplete] = useState(
     isMobile ? true : false
   );
-  const [lastAnimation, setLastAnimation] = useState(false);
+
   const t = useTranslations();
   const locale = useLocale();
 
@@ -339,7 +339,6 @@ export default function UsecaseAnimation() {
                 animate={{ opacity: 1, scale: 1, height: "68px" }}
                 exit={{ opacity: 0, scale: 0.95, filter: "blur(5px)" }}
                 transition={{ duration: 0.5, ease: easeOut }}
-                onAnimationComplete={() => setLastAnimation(true)}
                 className={`w-full flex flex-col gap-3 list-disc text-lg ${hoverAnimationComplete ? (isMobile ? "-translate-y-3" : "-translate-y-24") : ""}`}
               >
                 <li className="w-full grid grid-cols-[auto_1fr_auto_auto_auto_1fr_auto] items-center gap-0">
