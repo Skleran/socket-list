@@ -138,7 +138,7 @@ export default function UsecaseAnimation() {
   const locale = useLocale();
 
   return (
-    <motion.div className="w-[90vw] max-w-[500px] h-[700px] mx-auto mt-15 mb-20 flex flex-col items-center justify-top gap-10 overflow-visible">
+    <motion.div className="w-[90vw] max-w-[500px] h-[700px] mx-auto mt-20 mb-10 flex flex-col items-center justify-top gap-10 overflow-visible">
       <div className="flex flex-col gap-1 items-center">
         <h2 className="text-3xl font-semibold tracking-tight">
           {t("Landing_Demo.question")}
@@ -188,7 +188,7 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text1_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">1</p>
+                  <p className="text-end pr-6">3</p>
                 </li>
                 <li className="w-full grid grid-cols-[auto_1fr_auto_auto_auto_1fr_auto] items-center gap-0">
                   <Dot className="size-7" />
@@ -198,7 +198,7 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text1_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">2</p>
+                  <p className="text-end pr-6">1</p>
                 </li>
               </motion.ul>
             ) : (
@@ -251,7 +251,7 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text2_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">2</p>
+                  <p className="text-end pr-6">3</p>
                 </li>
               </motion.ul>
             ) : (
@@ -296,7 +296,7 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text3_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">1</p>
+                  <p className="text-end pr-6">2</p>
                 </li>
                 <li className="w-full grid grid-cols-[auto_1fr_auto_auto_auto_1fr_auto] items-center gap-0">
                   <Dot className="size-7" />
@@ -349,9 +349,9 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text4_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">1</p>
+                  <p className="text-end pr-6">5</p>
                 </li>
-                <li className="w-full grid grid-cols-[auto_1fr_auto_auto_auto_1fr_auto] items-center gap-0">
+                <li className="w-full grid grid-cols-[auto_1fr_auto_auto_auto_1fr_auto] items-center gap-0 leading-5">
                   <Dot className="size-7" />
                   {t("Landing_Demo.text4_item2")}
                   <p className="text-center text-muted-foreground">|</p>
@@ -359,7 +359,7 @@ export default function UsecaseAnimation() {
                     {t("Landing_Demo.text4_shop")}
                   </p>
                   <p className="text-center text-muted-foreground">|</p>
-                  <p className="text-end pr-6">2</p>
+                  <p className="text-end pr-6">20</p>
                 </li>
               </motion.ul>
             ) : (

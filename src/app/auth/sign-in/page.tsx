@@ -1,17 +1,32 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, easeOut, motion } from "motion/react";
 import HeroImages from "@/components/ui/hero-images";
 import BackgroundGradient from "@/components/ui/bg-gradient";
 import { useLocale, useTranslations } from "next-intl";
 import UsecaseAnimation from "@/components/ui/usecase-animation";
+import ImageSlider from "@/components/ui/image-slider";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
   const [isLoadingGitHub, setIsLoadingGitHub] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+  function useIsMobile(breakpoint = 640) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const check = () => setIsMobile(window.innerWidth < breakpoint);
+      check();
+      window.addEventListener("resize", check);
+      return () => window.removeEventListener("resize", check);
+    }, [breakpoint]);
+
+    return isMobile;
+  }
+
+  const isMobile = useIsMobile();
 
   const t = useTranslations();
   const locale = useLocale();
@@ -212,7 +227,27 @@ export default function SignIn() {
           </div>
         </div>
       </motion.div>
-      <HeroImages key={"images"} />
+      {isMobile ? (
+        <motion.div
+          key={"slider"}
+          initial={{
+            opacity: 0,
+            filter: "blur(10px)",
+            transform: "translateY(15%)",
+          }}
+          animate={{
+            opacity: 1,
+            filter: "blur(0px)",
+            transform: "translateY(0%)",
+          }}
+          transition={{ delay: 1.7, duration: 1, ease: easeOut }}
+        >
+          <ImageSlider />
+        </motion.div>
+      ) : (
+        <HeroImages key={"images"} />
+      )}
+
       <div key={"spacer"} className="max-sm:hidden h-[500px]" />
       <UsecaseAnimation key={"usecase-animation"} />
     </AnimatePresence>
