@@ -91,5 +91,40 @@
   "Login_Popover": {
     "login": "Log in",
     "btn": "Continue with"
+  },
+  "Landing_Demo": {
+    "question": "Why shared lists?",
+    "question_explain": "Managing tasks together shouldn't be a hassle.",
+    "followup_text": "no more chaos, just create a list and share.",
+    "followup_text_alt": "Just use Skleran List — shared tasks, no chaos, no drama.",
+
+    "this": "This, is",
+    "but": "But",
+    "with_sl": "with skleran list",
+    "without_sl": "without skleran list",
+
+    "text1_subject": "Mom",
+    "text1_text": "Can you get some bread and cheese on your way home? We’re out again.",
+    "text1_item1": "Bread",
+    "text1_item2": "Cheese",
+    "text1_shop": "Grocery Store",
+
+    "text2_subject": "Sister",
+    "text2_text": "Don’t forget to grab coffee and oat milk for breakfast tomorrow!",
+    "text2_item1": "Coffee",
+    "text2_item2": "Oat Milk",
+    "text2_shop": "Supermarket",
+
+    "text3_subject": "Brother",
+    "text3_text": "Pick up some chips and wafer? Movie night essentials.",
+    "text3_item1": "Chips",
+    "text3_item2": "Wafer",
+    "text3_shop": "Grocery Store",
+
+    "text4_subject": "Friend",
+    "text4_text": "Hey, can you bring snacks and paper cups for the picnic?",
+    "text4_item1": "Snacks",
+    "text4_item2": "Paper Cups",
+    "text4_shop": "Market"
   }
 }

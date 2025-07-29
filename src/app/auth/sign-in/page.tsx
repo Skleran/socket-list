@@ -6,7 +6,7 @@ import { AnimatePresence, easeOut, motion } from "motion/react";
 import HeroImages from "@/components/ui/hero-images";
 import BackgroundGradient from "@/components/ui/bg-gradient";
 import { useLocale, useTranslations } from "next-intl";
-// import UsecaseAnimation from "@/components/ui/usecase-animation";
+import UsecaseAnimation from "@/components/ui/usecase-animation";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
@@ -213,8 +213,8 @@ export default function SignIn() {
         </div>
       </motion.div>
       <HeroImages key={"images"} />
-      {/* <div key={"spacer"} className="max-sm:hidden h-[500px]" />
-      <UsecaseAnimation key={"usecase-animation"} /> */}
+      <div key={"spacer"} className="max-sm:hidden h-[500px]" />
+      <UsecaseAnimation key={"usecase-animation"} />
     </AnimatePresence>
   );
 }

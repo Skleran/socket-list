@@ -91,5 +91,40 @@
   "Login_Popover": {
     "login": "Giriş Yap",
     "btn": "ile devam et"
+  },
+  "Landing_Demo": {
+    "question": "Neden ortak listeler?",
+    "question_explain": "İşleri birlikte yönetmek bir dert olmamalı.",
+    "followup_text": "listeni oluştur ve paylaş — hızlı ve zahmetsizce.",
+    "followup_text_alt": "Skleran List kullan, işleri birlikte yönetmek dert olmaktan çıksın.",
+
+    "this": "Bu",
+    "but": "Ama",
+    "with_sl": "skleran list ile",
+    "without_sl": "skleran list olmadan",
+
+    "text1_subject": "Annem",
+    "text1_text": "Eve gelirken ekmekle peynir alabilir misin? Yine bitmiş.",
+    "text1_item1": "Ekmek",
+    "text1_item2": "Peynir",
+    "text1_shop": "Market",
+
+    "text2_subject": "Ablam",
+    "text2_text": "Yarın kahvaltı için kahveyle süt almayı unutma!",
+    "text2_item1": "Kahve",
+    "text2_item2": "Süt",
+    "text2_shop": "Süpermarket",
+
+    "text3_subject": "Kardeşim",
+    "text3_text": "Cips ve dondurma alır mısın? Film gecesi için şart.",
+    "text3_item1": "Cips",
+    "text3_item2": "Dondurma",
+    "text3_shop": "Bakkal",
+
+    "text4_subject": "Arkadaşım",
+    "text4_text": "Piknik için atıştırmalıkla karton bardak getirir misin?",
+    "text4_item1": "Atıştırmalık",
+    "text4_item2": "Karton Bardak",
+    "text4_shop": "Market"
   }
 }
