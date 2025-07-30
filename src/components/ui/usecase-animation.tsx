@@ -6,7 +6,7 @@ import {
   Transition,
   Variants,
 } from "motion/react";
-import { Dot, MousePointer2 } from "lucide-react";
+import { Dot } from "lucide-react";
 import { Button } from "./button";
 import { useLocale, useTranslations } from "next-intl";
 
