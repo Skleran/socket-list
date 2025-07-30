@@ -6,7 +6,7 @@ import {
   Transition,
   Variants,
 } from "motion/react";
-import { Dot } from "lucide-react";
+import { Dot, MousePointer2 } from "lucide-react";
 import { Button } from "./button";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -138,7 +138,7 @@ export default function UsecaseAnimation() {
   const locale = useLocale();
 
   return (
-    <motion.div className="w-[90vw] max-w-[500px] h-[700px] mx-auto mt-20 mb-10 flex flex-col items-center justify-top gap-10 overflow-visible">
+    <motion.div className="w-[90vw] max-w-[500px] h-[700px] xl:h-[800px] mx-auto mt-20 mb-10 flex flex-col items-center justify-top gap-10 overflow-visible">
       <div className="flex flex-col gap-1 items-center">
         <h2 className="text-3xl font-semibold tracking-tight">
           {t("Landing_Demo.question")}
@@ -329,7 +329,7 @@ export default function UsecaseAnimation() {
         <motion.div
           variants={msg4Variants}
           transition={animationTransitions}
-          className="w-full sm:w-[400px] sm:absolute  flex flex-col"
+          className="w-full xl:w-[400px] xl:absolute flex flex-col"
         >
           <AnimatePresence mode="wait">
             {hoverAnimationComplete ? (

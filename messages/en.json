@@ -126,5 +126,11 @@
     "text4_item1": "Snacks",
     "text4_item2": "Paper Cups",
     "text4_shop": "Market"
+  },
+  "Footer": {
+    "desc": "Start your collaborated list now.",
+    "or": "or",
+    "dev_with": "developed with",
+    "by": "by"
   }
 }

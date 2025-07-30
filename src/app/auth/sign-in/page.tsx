@@ -8,6 +8,7 @@ import BackgroundGradient from "@/components/ui/bg-gradient";
 import { useLocale, useTranslations } from "next-intl";
 import UsecaseAnimation from "@/components/ui/usecase-animation";
 import ImageSlider from "@/components/ui/image-slider";
+import LandingFooter from "@/components/ui/landing-footer";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
@@ -250,6 +251,7 @@ export default function SignIn() {
 
       <div key={"spacer"} className="max-sm:hidden h-[500px]" />
       <UsecaseAnimation key={"usecase-animation"} />
+      <LandingFooter key={"footer"} />
     </AnimatePresence>
   );
 }

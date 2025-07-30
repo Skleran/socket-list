@@ -126,5 +126,11 @@
     "text4_item1": "Atıştırmalık",
     "text4_item2": "Karton Bardak",
     "text4_shop": "Market"
+  },
+  "Footer": {
+    "desc": "Ortak listenizi hemen oluşturun.",
+    "or": "veya",
+    "dev_with": "ile geliştirildi",
+    "by": "tarafından"
   }
 }
