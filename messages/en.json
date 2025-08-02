@@ -132,5 +132,11 @@
     "or": "or",
     "dev_with": "developed with",
     "by": "by"
+  },
+
+  "ListLoginDialog": {
+    "button": "Sign in to edit this list",
+    "title": "Sign in to edit this list",
+    "description": "To make changes, add items, or collaborate, please sign in."
   }
 }

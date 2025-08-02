@@ -132,5 +132,10 @@
     "or": "veya",
     "dev_with": "ile geliştirildi",
     "by": "tarafından"
+  },
+  "ListLoginDialog": {
+    "button": "Listeyi düzenlemek için giriş yap",
+    "title": "Listeyi düzenlemek için giriş yap",
+    "description": "Değişiklik yapmak, öğe eklemek veya iş birliği yapmak için lütfen giriş yapın."
   }
 }

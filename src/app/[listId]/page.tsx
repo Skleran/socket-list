@@ -14,6 +14,7 @@ import EditableListTitle from "@/components/ui/editable-list-title";
 import ManageListButton from "@/components/ui/manage-list-button";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useTranslations } from "next-intl";
+import ListLoginDialog from "@/components/ui/list-login-dialog";
 
 export default function ListPage() {
   const params = useParams<{ listId: string }>();
@@ -52,6 +53,8 @@ export default function ListPage() {
     return <p className="animate-spin w-fit">|</p>;
   }
 
+  if (!type) return <p className="animate-spin w-fit">|</p>;
+
   const renderHeader = () => (
     <div className="flex items-center gap-2 justify-between mb-4">
       {isCreator ? (
@@ -77,12 +80,18 @@ export default function ListPage() {
     </div>
   );
 
+  const loginButton = () => {
+    if (user || list.visibility !== "public-edit") return null;
+    return <ListLoginDialog />;
+  };
+
   switch (type) {
     case "DEFAULT":
       return (
         <div>
           {renderHeader()}
           <DefaultList listId={listId} />
+          {loginButton()}
         </div>
       );
     case "CHECK":
@@ -90,6 +99,7 @@ export default function ListPage() {
         <div>
           {renderHeader()}
           <Checklist listId={listId} />
+          {loginButton()}
         </div>
       );
     case "SHOPPING":
@@ -97,6 +107,7 @@ export default function ListPage() {
         <div>
           {renderHeader()}
           <ShoppingList listId={listId} />
+          {loginButton()}
         </div>
       );
     default:
