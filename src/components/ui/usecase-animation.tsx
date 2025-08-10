@@ -167,7 +167,7 @@ export default function UsecaseAnimation() {
         className="max-xl:h-fit h-[460px] max-xl:flex max-xl:flex-col max-xl:gap-4 w-full xl:w-[420px] p-4 ring-1 ring-accent-foreground/5 dark:bg-card shadow-md dark:shadow-none shadow-accent-foreground/10 rounded-4xl relative"
       >
         <div
-          className="flex w-full h-full transition-opacity duration-500 hover:opacity-0"
+          className="flex w-full h-full transition-opacity duration-500 hover:opacity-0 max-xl:hidden"
           onMouseEnter={() =>
             setTimeout(() => {
               setHoveredOnce(true);
