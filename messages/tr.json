@@ -125,7 +125,9 @@
     "text4_text": "Piknik için atıştırmalıkla karton bardak getirir misin?",
     "text4_item1": "Atıştırmalık",
     "text4_item2": "Karton Bardak",
-    "text4_shop": "Market"
+    "text4_shop": "Market",
+
+    "hover_indicator": "Gel ve Gör"
   },
   "Footer": {
     "desc": "Ortak listenizi hemen oluşturun.",

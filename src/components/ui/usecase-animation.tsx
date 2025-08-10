@@ -6,7 +6,7 @@ import {
   Transition,
   Variants,
 } from "motion/react";
-import { Dot } from "lucide-react";
+import { Dot, MousePointer2 } from "lucide-react";
 import { Button } from "./button";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -130,6 +130,7 @@ export default function UsecaseAnimation() {
 
   const isMobile = useIsMobile();
 
+  const [hoveredOnce, setHoveredOnce] = useState(false);
   const [hoverAnimationComplete, setHoverAnimationComplete] = useState(
     isMobile ? true : false
   );
@@ -163,8 +164,23 @@ export default function UsecaseAnimation() {
           onHoverEnd: () => setHoverAnimationComplete(false),
           onAnimationComplete: () => setHoverAnimationComplete(true),
         })}
-        className="max-xl:h-fit h-[460px] max-xl:flex max-xl:flex-col max-xl:gap-4 w-full xl:w-[420px] p-4 ring-1 ring-accent-foreground/5 shadow-md shadow-accent-foreground/10 rounded-4xl relative"
+        className="max-xl:h-fit h-[460px] max-xl:flex max-xl:flex-col max-xl:gap-4 w-full xl:w-[420px] p-4 ring-1 ring-accent-foreground/5 dark:bg-card shadow-md dark:shadow-none shadow-accent-foreground/10 rounded-4xl relative"
       >
+        <div
+          className="flex w-full h-full transition-opacity duration-500 hover:opacity-0"
+          onMouseEnter={() =>
+            setTimeout(() => {
+              setHoveredOnce(true);
+            }, 500)
+          }
+        >
+          {!hoveredOnce && (
+            <div className="flex flex-col items-center gap-2 m-auto animate-pulse">
+              <MousePointer2 className="size-8" />
+              <p className="text-lg">{t("Landing_Demo.hover_indicator")}</p>
+            </div>
+          )}
+        </div>
         <motion.div
           variants={msg1Variants}
           transition={animationTransitions}
@@ -208,7 +224,7 @@ export default function UsecaseAnimation() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, filter: "blur(5px)", y: 10 }}
                 transition={{ duration: 0.5, ease: easeOut }}
-                className="bg-card w-full ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
+                className="bg-card dark:bg-accent w-full ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
               >
                 <p className="font-semibold text-xl underline underline-offset-3">
                   {t("Landing_Demo.text1_subject")}
@@ -262,7 +278,7 @@ export default function UsecaseAnimation() {
                 exit={{ opacity: 0, filter: "blur(5px)", y: 10 }}
                 transition={{ duration: 0.5, ease: easeOut, delay: 0.2 }}
                 className={
-                  "bg-card ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
+                  "bg-card dark:bg-accent ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
                 }
               >
                 <p className="font-semibold text-xl underline underline-offset-3">
@@ -316,7 +332,7 @@ export default function UsecaseAnimation() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, filter: "blur(5px)", y: 10 }}
                 transition={{ duration: 0.5, ease: easeOut, delay: 0.4 }}
-                className="bg-card ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
+                className="bg-card dark:bg-accent ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
               >
                 <p className="font-semibold text-xl underline underline-offset-3">
                   {t("Landing_Demo.text3_subject")}
@@ -369,7 +385,7 @@ export default function UsecaseAnimation() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, filter: "blur(5px)", y: 10 }}
                 transition={{ duration: 0.5, ease: easeOut, delay: 0.6 }}
-                className="bg-card ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
+                className="bg-card dark:bg-accent ring-1 ring-accent-foreground/10 dark:ring-accent-foreground/5 rounded-2xl py-2 px-3 shadow-lg shadow-accent/50 h-25"
               >
                 <p className="font-semibold text-xl underline underline-offset-3">
                   {t("Landing_Demo.text4_subject")}
@@ -390,7 +406,7 @@ export default function UsecaseAnimation() {
             )}
             <Button
               onClick={() => setHoverAnimationComplete((prev) => !prev)}
-              className="px-4 py-2 rounded"
+              className={`px-4 py-2 rounded ${hoverAnimationComplete ? "" : "animate-ring-pulse"}`}
               variant={hoverAnimationComplete ? "secondary" : "default"}
             >
               {hoverAnimationComplete ? (

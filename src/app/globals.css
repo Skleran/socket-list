@@ -167,6 +167,22 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  @keyframes ring-pulse {
+    0% {
+      box-shadow: 0 0 0 0 var(--color-ring);
+    }
+    50% {
+      box-shadow: 0 0 0 6px var(--color-ring);
+    }
+    100% {
+      box-shadow: 0 0 0 0px transparent;
+    }
+  }
+
+  .animate-ring-pulse {
+    animation: ring-pulse 1.5s infinite;
+  }
 }
 
 @layer components {

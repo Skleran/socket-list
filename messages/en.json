@@ -125,7 +125,9 @@
     "text4_text": "Hey, can you bring snacks and paper cups for the picnic?",
     "text4_item1": "Snacks",
     "text4_item2": "Paper Cups",
-    "text4_shop": "Market"
+    "text4_shop": "Market",
+
+    "hover_indicator": "Hover to Discover"
   },
   "Footer": {
     "desc": "Start your collaborated list now.",

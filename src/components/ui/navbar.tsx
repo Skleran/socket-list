@@ -18,7 +18,7 @@ export default async function Navbar() {
       <div className="w-full mt-2 h-12 flex items-center justify-between">
         <Button variant={"link"} className="p-0 py-1 m-0" asChild>
           <Link href={"/"} className="h-fit">
-            skleran list
+            Skleran List
           </Link>
         </Button>
         {(await isAuthenticatedNextjs()) ? (
