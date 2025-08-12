@@ -56,13 +56,11 @@ export default function NewListDialog() {
         type: type as ListType,
         visibility: visibility as Visibility,
       });
-      console.log(title + type + visibility);
       setTitle("");
       setType("");
       setVisibility("");
       setOpen(false);
     } catch (err) {
-      console.log(title + type + visibility);
       console.error("Error creating list:", err);
     }
   };
