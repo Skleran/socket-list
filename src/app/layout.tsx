@@ -10,6 +10,7 @@ import { LayoutProvider } from "@/components/ui/layout-context";
 // import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { ThemeFavicon } from "@/components/ui/theme-favicon";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -21,6 +22,18 @@ export const metadata: Metadata = {
   description:
     "Skleran List helps you create and share collaborative lists effortlessly — perfect for shopping, planning, and more.",
   keywords: "collaborative list, shared list, shopping list app, to-do list",
+
+  manifest: "/manifest.json",
+  appleWebApp: {
+    title: "Skleran List",
+    statusBarStyle: "default",
+    capable: true,
+  },
+
+  other: {
+    "apple-mobile-web-app-title": "Skleran List",
+    "application-name": "Skleran List",
+  },
 };
 
 export default async function RootLayout({
@@ -33,6 +46,7 @@ export default async function RootLayout({
   return (
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
+        <ThemeFavicon />
         <body
           className={`${outfit.className} antialiased min-h-[100svh] w-full `}
         >
