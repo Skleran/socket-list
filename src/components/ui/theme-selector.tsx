@@ -30,11 +30,16 @@ export default function ChangeThemeTabs({
   const toggleTheme = async (id: string) => {
     if (!ref.current) return;
 
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        setTheme(id);
-      });
-    }).ready;
+    if ((document as any).startViewTransition) {
+      await (document as any).startViewTransition(() => {
+        flushSync(() => {
+          setTheme(id);
+        });
+      }).ready;
+    } else {
+      // fallback
+      setTheme(id);
+    }
   };
 
   return (
